@@ -25,7 +25,7 @@ The way to contribute your own projects is to create a pull request in GitHub (y
 
 It is enough for your projects to be built without errors and to run fine.
 
-**The Readme file**
+##### The Readme file
 You may want to create a readme.txt or readme.md file to state your project's license, and give credits when appropriate. Remember that people usually won't know about your games or projects! It could be a good idea for your readme to include a small description and maybe some screenshot. 
 
 Also, if your project is a library it is recommended to include some simple example showing your possible users how to use it.

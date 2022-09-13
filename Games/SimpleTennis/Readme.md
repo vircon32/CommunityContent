@@ -6,8 +6,8 @@ This game is your basic Pong clone, but it includes a few options for you to con
 
 ###  Screenshots:
 
-    ![Title screen](screenshots/title_screen.png)
-    ![Gameplay](screenshots/gameplay.png)
+    ![Title screen](screenshots/title_screen.png?raw=true)
+    ![Gameplay](screenshots/gameplay.png?raw=true)
   
 ###  Credits:
 
