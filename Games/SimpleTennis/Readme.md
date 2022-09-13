@@ -6,8 +6,8 @@ This game is your basic Pong clone, but it includes a few options for you to con
 
 ###  Screenshots:
 
-    ![Title screen](./screenshots/title_screen.png)
-    ![Gameplay](./screenshots/gameplay.png)
+    ![Title screen](https://raw.githubusercontent.com/vircon32/CommunityContent/main/Games/SimpleTennis/screenshots/title_screen.png)
+    ![Gameplay](https://raw.githubusercontent.com/vircon32/CommunityContent/main/Games/SimpleTennis/screenshots/gameplay.png)
   
 ###  Credits:
 
