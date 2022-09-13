@@ -1,0 +1,29 @@
+#-------------------------
+# Image files
+#-------------------------
+*.png binary
+*.gif binary
+*.jpg binary
+*.ase binary
+*.psd binary
+
+#-------------------------
+# Sound files
+#-------------------------
+*.wav binary
+*.mp3 binary
+*.mmpz binary
+
+#-------------------------
+# Document files
+#-------------------------
+*.xlsx binary
+*.docx binary
+*.pptx binary
+
+#-------------------------
+# Other possible files
+#-------------------------
+*.exe binary
+*.fnt binary
+*.zip binary
