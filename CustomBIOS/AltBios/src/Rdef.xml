@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="bios" title="Bios (Jump with check)" version="1.0" />
+    <binary path="obj/main.vbin" />
+    <textures>
+        <texture path="obj/Texture.vtex" />
+    </textures>
+    <sounds>
+        <sound path="obj/Sound.vsnd" />
+    </sounds>
+</rom-definition>
