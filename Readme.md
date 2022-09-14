@@ -59,4 +59,4 @@ If you are not familiar with Vircon32, a 32-bit virtual game console, you can vi
 --------------------------------------------
 ### How to build these programs from source?
 
-These Vircon32 programs can be built using the development tools available at the [https://github.com/vircon32/ComputerSoftware](ComputerSoftware repository).
+These Vircon32 programs can be built using the development tools available at the [ComputerSoftware repository](https://github.com/vircon32/ComputerSoftware).
