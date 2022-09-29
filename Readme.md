@@ -45,6 +45,13 @@ I may still reject projects if I think they are inappropriate in some other way.
 Of course you are free to make any Vircon32 projects you wish, even outside these rules. But you will have to host it in your own repositories.
 
 ----------------------------------
+### Please take in mind
+
+To keep things clean, Git has been configured to ignore temporary build files. It is OK to upload the final .v32 binaries, so that people can try your peojects without compiling themselves, but we will try to avoid intermediate results (.vtex, .vsnd, etc) since they take up space and are not needed.
+
+It is encouraged that you configure your build so that these temporary build files will be placed in a folder called 'obj', that way Git will skip the whole folder automatically.
+
+----------------------------------
 ### Where to learn about Vircon32?
 
 If you are not familiar with Vircon32, a 32-bit virtual game console, you can visit its website [www.vircon32.com](http://www.vircon32.com "Vircon32 Homepage") for more information. There you will also find everything you may need to try out the console and to make games for it.
@@ -52,4 +59,4 @@ If you are not familiar with Vircon32, a 32-bit virtual game console, you can vi
 --------------------------------------------
 ### How to build these programs from source?
 
-These Vircon32 programs can be built using the development tools available at the [https://github.com/vircon32/ComputerSoftware](ComputerSoftware repository).
+These Vircon32 programs can be built using the development tools available at the [ComputerSoftware repository](https://github.com/vircon32/ComputerSoftware).
