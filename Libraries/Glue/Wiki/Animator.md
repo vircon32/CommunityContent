@@ -13,22 +13,22 @@
 #import "glue_animator"
 ```
 
-
 ## Usage
 ### glue_move_start()
 use it only once and outside of a loop
 clears all the values
 
-### glue_move_edit(int key, int type)
+### glue_move_edit( int key, int type )
 modifies keyframe state
 - _**Key**_ = Keyframe
 - _**Type**_ = modification type
-     - **go_start** = goes to the beginning
-     - **go_end** = ends the animation
-     - **go_pause** = pauses the animation
-     - **go_continue** = continues the previously paused animation
+     - **go_start (0)** = goes to the beginning
+     - **go_end (1)** = ends the animation
+     - **go_pause (2)** = pauses the animation
+     - **go_continue (3)** = continues the previously paused animation
+     - **delete_key (4)** =deletes the keyframe
+### glue_move( int key, float init, float finish, float velocity, int type )
 
-#### syntax:
 ```
 initial = glue_move( key, initial, final, velocity, type );
 ```

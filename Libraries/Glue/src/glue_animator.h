@@ -15,6 +15,7 @@
 #define go_end 1
 #define go_pause 2
 #define go_continue 3
+#define delete_key 4
 
 
 float[glue_AnimLimit+1] key_timer;
@@ -96,6 +97,8 @@ void glue_move_edit(int key, int type){
 		case(go_pause): key_active[key]=false; break;
 		
 		case(go_continue): key_active[key]=true; break;
+
+		case(delete_key): key_active[key]=false; key_init[key]=0; key_timer[key]=0; break;
 
 	}
 
