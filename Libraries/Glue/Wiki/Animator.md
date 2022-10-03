@@ -20,7 +20,7 @@ clears all the values
 
 ### glue_move_edit( int key, int type )
 modifies keyframe state
->default key type is go_pause
+
 - _**Key**_ = Keyframe
 - _**Type**_ = modification type
      - **go_start (0)** = goes to the beginning
