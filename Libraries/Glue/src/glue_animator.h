@@ -98,7 +98,7 @@ void glue_move_edit(int key, int type){
 		
 		case(go_continue): key_active[key]=true; break;
 
-		case(delete_key): key_active[key]=false; key_init[key]=0; key_timer[key]=0; break;
+		case(delete_key): key_active[key]=true; key_init[key]=0; key_timer[key]=0; break;
 
 	}
 
