@@ -20,6 +20,7 @@ clears all the values
 
 ### glue_move_edit( int key, int type )
 modifies keyframe state
+
 - _**Key**_ = Keyframe
 - _**Type**_ = modification type
      - **go_start (0)** = goes to the beginning
@@ -27,6 +28,9 @@ modifies keyframe state
      - **go_pause (2)** = pauses the animation
      - **go_continue (3)** = continues the previously paused animation
      - **delete_key (4)** =deletes the keyframe
+
+
+
 ### glue_move( int key, float init, float finish, float velocity, int type )
 
 ```

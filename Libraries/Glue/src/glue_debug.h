@@ -6,13 +6,13 @@
 void print_int(int posx,int posy, float num){
 	
 	int[20] hlt;
-	glue_itoa(num,hlt,10);
+	itoa(num,hlt,10);
 	print_at(posx,posy,hlt);
 }
 void print_float(int px,int py,float flnum){
 	
 	int[20] text;
-	glue_ftoa(flnum,text);
+	ftoa(flnum,text);
 	print_at(px,py,text);
 }
 
