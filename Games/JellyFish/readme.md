@@ -7,7 +7,7 @@ If you have problems or questions contact me on discord as @The R#4748
 ![Title screen](screenshots/title_screen.png "Title screen")
 ![Gameplay](screenshots/gameplay.png "Gameplay")
 
-## #License:
+### License:
 
 Copyright 2022 TheR
 
