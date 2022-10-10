@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+<rom type="cartridge" title="JellyFish" version="1.0" />
+<binary path="obj/main.vbin" />
+<textures>
+<texture path="obj/player.vtex" />
+<texture path="obj/fish.vtex" />
+<texture path="obj/bg1.vtex" />
+<texture path="obj/lives.vtex" />
+<texture path="obj/sfont.vtex" />
+<texture path="obj/vignette.vtex" />
+<texture path="obj/dead.vtex" />
+<texture path="obj/turtle.vtex" />
+<texture path="obj/LupFish.vtex" />
+<texture path="obj/shark.vtex" />
+<texture path="obj/intro.vtex" />
+<texture path="obj/nomem.vtex" />
+
+</textures>
+<sounds>
+<sound path="obj/bgs.vsnd" />
+<sound path="obj/bubles.vsnd" />
+<sound path="obj/Hit.vsnd" />
+<sound path="obj/shark_sound.vsnd" />
+<sound path="obj/intro.vsnd" />
+
+</sounds>
+</rom-definition>
