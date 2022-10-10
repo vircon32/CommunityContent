@@ -87,7 +87,7 @@ if(pl_lives>0){
 	if(pl_hitd && pl_hittimer <=80){
 		
 		panima=0;
-		if(pl_hittimer>0 && pl_hittimer<3)general_score-=350;
+		if(pl_hittimer>0 && pl_hittimer<3 && pl_lives>1)general_score-=350;
 		if(pl_hittimer>0 && pl_hittimer<10){pspr=4;pl_ay=-50;}
 		if(pl_hittimer>10){pspr=5;}
 		if(pl_hittimer>20){pspr=4;}
