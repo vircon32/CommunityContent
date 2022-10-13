@@ -1,6 +1,16 @@
 
+//	||>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>||
+//		glue debug
+//	
+//		just try printing an float
+//	||<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<||
+
+
+
 #ifndef GLUE_DEBUG_H_H
 #define GLUE_DEBUG_H
+
+
 #include "string.h"
 
 void print_int(int posx,int posy, float num){
@@ -9,6 +19,7 @@ void print_int(int posx,int posy, float num){
 	itoa(num,hlt,10);
 	print_at(posx,posy,hlt);
 }
+
 void print_float(int px,int py,float flnum){
 	
 	int[20] text;

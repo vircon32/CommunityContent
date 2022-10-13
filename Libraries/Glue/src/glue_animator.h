@@ -1,9 +1,16 @@
-#include "math.h"
+
+//	||>>>>>>>>>>>>>>>>>>>>>>>>>>>||
+//		glue Animator
+//	
+//		Hollywood aproved
+//	||<<<<<<<<<<<<<<<<<<<<<<<<<<<||
+
+
 
 #ifndef GLUE_ANIMATOR_H
 #define GLUE_ANIAMTOR_H
 
-
+#include "math.h"
 #define ease_in 0
 #define ease_out 1
 #define ease_inout 2
@@ -98,7 +105,7 @@ void glue_move_edit(int key, int type){
 		
 		case(go_continue): key_active[key]=true; break;
 
-		case(delete_key): key_active[key]=true; key_init[key]=0; key_timer[key]=0; break;
+		case(delete_key): key_active[key]=false; key_init[key]=0; key_timer[key]=0; break;
 
 	}
 
