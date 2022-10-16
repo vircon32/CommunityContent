@@ -1,10 +1,9 @@
 #include "video.h"
 #include "time.h"
 #include "input.h"
-#include "glue_debug.h"
+#include "string.h"
 #include "math.h"
 
-#include "Glue++.h"
 #include "Glue_cline.h"
 
 void main(void){
