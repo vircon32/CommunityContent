@@ -61,9 +61,6 @@ void draw_dot(int x, int y){
 }
 
 
-
-
-bool get_key(int key){
 	#define  k_left		0
 	#define  k_right	1
 	#define  k_up		2
@@ -75,6 +72,9 @@ bool get_key(int key){
 	#define  k_l		8
 	#define  k_r		9
 	#define  k_start	10
+
+
+bool get_key(int key){
 	
 
 	int key_left;
