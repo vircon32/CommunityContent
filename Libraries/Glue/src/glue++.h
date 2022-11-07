@@ -128,27 +128,27 @@ bool get_key(int key){
 	
 	switch(key){
 		
-		case(k_left): if(key_left>0)return true; else return false; break;
+		case(k_left): if(key_left>0)return true; break;
 		
-		case(k_right): if(key_right>0)return true; else return false; break;
+		case(k_right): if(key_right>0)return true; break;
 		
-		case(k_up): if(key_up>0)return true; else return false; break;
+		case(k_up): if(key_up>0)return true; break;
 		
-		case(k_down): if(key_down>0)return true; else return false; break;
+		case(k_down): if(key_down>0)return true; break;
 		
-		case(k_a): if(key_a>0)return true; else return false; break;
+		case(k_a): if(key_a>0)return true; break;
 		
-		case(k_b): if(key_b>0)return true; else return false; break;
+		case(k_b): if(key_b>0)return true; break;
 		
-		case(k_x): if(key_x>0)return true; else return false; break;
+		case(k_x): if(key_x>0)return true; break;
 		
-		case(k_y): if(key_y>0)return true; else return false; break;
+		case(k_y): if(key_y>0)return true; break;
 		
-		case(k_l): if(key_l>0)return true; else return false; break;
+		case(k_l): if(key_l>0)return true; break;
 
-		case(k_r): if(key_r>0)return true; else return false; break;
+		case(k_r): if(key_r>0)return true; break;
 		
-		case(k_start): if(key_start>0)return true; else return false; break;
+		case(k_start): if(key_start>0)return true; break;
 		
 		
 	}
