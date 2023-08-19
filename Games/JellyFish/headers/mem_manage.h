@@ -11,7 +11,7 @@ void memanagement(){
 	int make=0;
 	
 		if(card_is_connected()){
-			card_read_data( &maxscore, sizeof(sign), maxscore );
+			card_read_data( &maxscore, sizeof(sign), sizeof(maxscore) );
 			connec=true;
 
 			if(card_is_empty())card_write_signature(&sign);

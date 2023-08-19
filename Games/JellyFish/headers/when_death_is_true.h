@@ -57,7 +57,7 @@ if(deathtimer>50){
 		draw_region_at(122,210);
 		
 		maxscore=general_score;
-		card_write_data( &maxscore, sizeof(sign), general_score );	
+		card_write_data( &maxscore, sizeof(sign), sizeof(maxscore) );	
 		}else{
 		select_region(RegNew);
 		draw_region_at(122,212);
