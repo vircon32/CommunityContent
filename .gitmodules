@@ -1,0 +1,3 @@
+[submodule "Assets/emulationstation-themes"]
+	path = Assets/emulationstation-themes
+	url = https://github.com/Chandler-Kluser/vircon32-libretro-theme-resources.git
