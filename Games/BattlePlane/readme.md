@@ -5,9 +5,9 @@
 
 ### Defeat your friends in a fast top-view game
 
-![screenshot](https://github.com/r-gt/CommunityContent/assets/73716729/ec0f439d-2936-4fc6-b160-f7989864ca57)
+![Players joining](screenshots/players_joining.png "Players joining")
 
-![screenshot2](https://github.com/r-gt/CommunityContent/assets/73716729/4f288123-786e-401f-9f8d-7370a3c4a952)
+![Gameplay](screenshots/gameplay.png "Gameplay")
 
 
 ```

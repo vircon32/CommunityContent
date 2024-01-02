@@ -39,7 +39,7 @@ bin:
 	@echo ================ compiled ===============
 	$(asm) ./build/bin/main.asm -o ./build/bin/main.vbin
 	@echo ================ assembled ==============
-	$(pack) ./romdef.xml -o ./build/rom.v32
+	$(pack) ./romdef.xml -o ./build/Battle_Plane.v32
 	@echo ================= packed ================
 
 all:
@@ -57,4 +57,4 @@ all:
 
 test: all
 	@echo testing rom
-	$(emulator) ./build/rom.v32
+	$(emulator) ./build/Battle_Plane.v32
