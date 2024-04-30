@@ -52,6 +52,13 @@ To keep things clean, Git has been configured to ignore temporary build files. I
 It is encouraged that you configure your build so that these temporary build files will be placed in a folder called 'obj', that way Git will skip the whole folder automatically.
 
 ----------------------------------
+### License
+
+This repository contains several elements by different authors, so there is no global license. Please check the license or readme files for each of the projects to find out more.
+
+If you contribute to this repository, please let people know of the applicable license for your project. If you use some other software or assets and they have their own licence you should state this as well.
+
+----------------------------------
 ### Where to learn about Vircon32?
 
 If you are not familiar with Vircon32, a 32-bit virtual game console, you can visit its website [www.vircon32.com](http://www.vircon32.com "Vircon32 Homepage") for more information. There you will also find everything you may need to try out the console and to make games for it.
