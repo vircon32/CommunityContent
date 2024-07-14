@@ -18,5 +18,5 @@ You are the little red box, always starting in the lower right corner of the maz
 
 ## License
 * License of my part of game's code is MIT
-* Game uses DrawPrimitives and TextFonts from @vircon32 in libs dir it's license is 3-Clause BSD License.
-* game uses a font Asset (TextureFont22x32.png) created by @vircon32 provided under CC BY 4.0 License
+* Game uses DrawPrimitives and TextFonts from [@vircon32](https://www.github.com/vircon32) in libs dir it's license is 3-Clause BSD License.
+* game uses a font Asset (TextureFont22x32.png) created by [@vircon32](https://www.github.com/vircon32) provided under CC BY 4.0 License
