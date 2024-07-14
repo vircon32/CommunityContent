@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Mazethingie" version="1.0" />
+    <binary path="obj/Mazethingie.vbin" />
+    <textures>
+        <texture path="obj/TextureFont22x32.vtex" />        
+    </textures>
+    <sounds>        
+    </sounds>
+</rom-definition>
