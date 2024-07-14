@@ -98,10 +98,17 @@ void TitleScreen()
     {
 		if (gamepad_right() % MenuSpeedTickVal == 1)
 			if (MazeHeight < MaxMazeHeight)
+			{
 				MazeHeight++;
+				SaveSettings();
+			}
+
 		if (gamepad_left() % MenuSpeedTickVal == 1)
 			if(MazeHeight > 10 )
+			{
 				MazeHeight--;
+				SaveSettings();
+			}
 	}
 }
 #endif
