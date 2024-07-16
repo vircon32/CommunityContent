@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Rubdio" version="1.0" />
+    <binary path="obj/rubido.vbin" />
+    <textures>
+        <texture path="obj/background.vtex" />
+        <texture path="obj/credits.vtex" />
+        <texture path="obj/infoveryeasy.vtex" />
+        <texture path="obj/infoeasy.vtex" />
+        <texture path="obj/infohard.vtex" />
+        <texture path="obj/infoveryhard.vtex" />
+        <texture path="obj/titlescreen.vtex" />
+        <texture path="obj/peg.vtex" />
+        <texture path="obj/newgame1.vtex" />
+        <texture path="obj/newgame2.vtex" />
+        <texture path="obj/credits1.vtex" />
+        <texture path="obj/credits2.vtex" />
+    </textures>
+    <sounds>
+        <sound path="obj/good.vsnd" />
+        <sound path="obj/loser.vsnd" />
+        <sound path="obj/select.vsnd" />
+        <sound path="obj/start.vsnd" />
+        <sound path="obj/winner.vsnd" />
+        <sound path="obj/wrong.vsnd" />
+        <sound path="obj/rubido.vsnd" />
+    </sounds>
+</rom-definition>
