@@ -1,0 +1,6 @@
+Permission was asked to use the files as well as if it was ok to resample them from 22050 to 44100hz.
+
+gameover.wav - Luca "MADrigal" Antignano - Creative Common Attribution-NonCommercial-NoDerivatives - Gameover.wav resampled from 22050 to 44100hz from Roller Coaster game from MADrigal CD Collection - http://www.madrigaldesign.it/sim/
+crash.wav - Luca "MADrigal" Antignano - Creative Common Attribution-NonCommercial-NoDerivatives - Missdock.wav from 22050 to 44100hz from Galaxy II game from MADrigal CD Collection - http://www.madrigaldesign.it/sim/
+tick.wav - Luca "MADrigal" Antignano - Creative Common Attribution-NonCommercial-NoDerivatives - Startbtn.wav from 22050 to 44100hz from Galaxy II game from MADrigal CD Collection - http://www.madrigaldesign.it/sim/
+start.wav - Luca "MADrigal" Antignano - Creative Common Attribution-NonCommercial-NoDerivatives - Start.wav from 22050 to 44100hz from Galaxy II game from MADrigal CD Collection - http://www.madrigaldesign.it/sim/

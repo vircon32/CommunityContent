@@ -1,0 +1,29 @@
+LIMITED USE SOFTWARE LICENSE AGREEMENT
+
+This application and every included file and document (the "Software") is
+released under "Creative Common Attribution-NonCommercial-NoDerivatives"
+license 4.0 available at:
+https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode
+
+In addition to the constraints set by the CC license, you must respect
+the following rules:
+a. do not offer the Software on a pay-per-play basis.
+b. do not distribute the Software through pre-paid access websites or
+   BBS's.
+c. do not use the Software in publications of any form unless written
+   consent is obtained by the author.
+d. do not distribute the Software through mirror websites, unless
+   written consent is obtained by the author.
+e. do not distribute older versions of the Software through authorized
+   mirror websites after newer ones have been made available by the
+   author.
+
+Excerpt from the CC BY-NC-ND license 4.0
+========================================
+BY: You must give appropriate credit, provide a link to the license, and
+    indicate if changes were made. You may do so in any reasonable
+    manner, but not in any way that suggests the licensor endorses you
+    or your use.
+NC: You may not use the material for commercial purposes.
+ND: NoDerivatives — If you remix, transform, or build upon the material,
+    you may not distribute the modified material.
