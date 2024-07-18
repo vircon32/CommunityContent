@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Formula 1" version="1.0" />
+    <binary path="obj/formula1.vbin" />
+    <textures>
+        <texture path="obj/background.vtex" />
+        <texture path="obj/bigfont.vtex" />
+        <texture path="obj/lcdfont.vtex" />
+        <texture path="obj/enemy.vtex" />
+        <texture path="obj/player.vtex" />
+        </textures>
+    <sounds>
+        <sound path="obj/crash.vsnd" />
+        <sound path="obj/tick.vsnd" />
+		<sound path="obj/start.vsnd" />
+		<sound path="obj/gameover.vsnd" />
+    </sounds>
+</rom-definition>
