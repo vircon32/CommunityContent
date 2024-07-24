@@ -40,10 +40,6 @@ void SetupFont()
     
     select_region( FirstRegionFullFont + ' ' );
     define_region( 0,64,  15,95,  0,95 );
-
-	FontLetters.character_height = 31;
-    FontLetters.use_variable_width = true;
-    textfont_read_region_widths( &FontLetters );
     
     // 2 pixels overlap between characters, 15 pixels between lines
     FontLetters.character_separation = -2;
@@ -52,6 +48,11 @@ void SetupFont()
     // define texture and regions for our characters
     FontLetters.texture_id = TextureFullFont;
     FontLetters.character_zero_region_id = FirstRegionFullFont;
+    
+    // configure for variable width characters
+    FontLetters.character_height = 31;
+    FontLetters.use_variable_width = true;
+    textfont_read_region_widths( &FontLetters );
 }
 
 void main()
