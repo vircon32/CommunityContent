@@ -1,3 +1,3 @@
 # CommunityContent: Vircon32 Tools
 
-This folder will contain tools related to Vircon32 console and it's software or development process.
+This folder will contain tools and utilities related to Vircon32, its software or its development process.
