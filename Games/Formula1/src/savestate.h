@@ -27,6 +27,8 @@ void saveSaveState(void)
 
 void initSaveState(void)
 {
+    memset( &GameSignature, 0, sizeof( game_signature ) );
+    strcpy( GameSignature, "FORMULA1_V1" );
     hiScore = 0;
     loadSaveState();
 }
