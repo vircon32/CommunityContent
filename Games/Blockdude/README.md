@@ -6,9 +6,6 @@ This version of the game for the vircon32 fantasy console is based on the Playda
 ![screenshot 1](screenshots/screenshot1.png)
 ![screenshot 2](screenshots/screenshot2.png)
 ![screenshot 3](screenshots/screenshot3.png)
-![screenshot 4](screenshots/screenshot4.png)
-![screenshot 5](screenshots/screenshot5.png)
-![screenshot 6](screenshots/screenshot6.png)
 
 ## Vircon32 Game Features:
 - Adapted code to work with Vircon32
