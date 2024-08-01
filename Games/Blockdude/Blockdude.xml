@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Blockdude" version="1.0" />
+    <binary path="obj/blockdude.vbin" />
+    <textures>
+		<!-- FP DEFAULT SKIN -->
+		<texture path="obj\fpdefault_all.vtex" />
+	
+		<!-- FPTECH SKIN -->
+		<texture path="obj\fptech_all.vtex" />
+		
+		<!-- DEFAULT SKIN -->
+		<texture path="obj\default_all.vtex" />
+		
+		<!-- TI83 SKIN -->
+		<texture path="obj\ti83_all.vtex" />
+		
+		<!-- Kenney SKIN -->
+		<texture path="obj\kenney_all.vtex" />
+		
+		<!-- Intro -->
+		<texture path="obj\intro_all.vtex" />
+		
+		<!-- FONTS -->
+		<texture path="obj\Roboto_Bold_12.vtex" />
+		<texture path="obj\Roboto_Bold_18.vtex" />
+		<texture path="obj\Roboto_Bold_32.vtex" />
+    </textures>
+    <sounds>
+		<sound path="obj/title.vsnd" />
+		<sound path="obj/back.vsnd" />
+		<sound path="obj/drop.vsnd" />
+		<sound path="obj/fall.vsnd" />
+		<sound path="obj/jump.vsnd" />
+		<sound path="obj/menu.vsnd" />
+		<sound path="obj/pickup.vsnd" />
+		<sound path="obj/select.vsnd" />
+		<sound path="obj/stageend.vsnd" />
+		<sound path="obj/walk.vsnd" />
+    </sounds>
+</rom-definition>
