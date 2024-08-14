@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Retrotime" version="1.0" />
+    <binary path="obj/Retrotime.vbin" />
+    <textures>
+		<texture path="obj\fasterdave.vtex" />
+		<texture path="obj\blockstacker.vtex" />
+		<texture path="obj\breakout.vtex" />
+		<texture path="obj\frog.vtex" />
+		<texture path="obj\invaders.vtex" />
+		<texture path="obj\pang.vtex" />
+		<texture path="obj\main.vtex" />
+		<texture path="obj\gamepreview.vtex" />
+		<texture path="obj\ramit.vtex" />
+		<texture path="obj\snakey.vtex" />
+		<texture path="obj\Roboto_Reguluar_14.vtex" />
+		<texture path="obj\Roboto_Reguluar_17.vtex" />
+		<texture path="obj\Roboto_Reguluar_19.vtex" />
+		<texture path="obj\Roboto_Reguluar_20.vtex" />
+		<texture path="obj\Roboto_Reguluar_22.vtex" />
+		<texture path="obj\Roboto_Reguluar_25.vtex" />
+		<texture path="obj\Roboto_Reguluar_30.vtex" />
+		<texture path="obj\Roboto_Reguluar_40.vtex" />
+    </textures>
+    <sounds>
+	    <!-- music -->
+		<sound path="obj/mainmusic.vsnd" />
+		<sound path="obj/blockstackermusic.vsnd" />
+		<sound path="obj/breakoutmusic.vsnd" />
+		<sound path="obj/fasterdavemusic.vsnd" />
+		<sound path="obj/frogmusic.vsnd" />
+		<sound path="obj/invadersmusic.vsnd" />
+		<sound path="obj/pangmusic.vsnd" />
+		<sound path="obj/ramitmusic.vsnd" />
+		<sound path="obj/snakeymusic.vsnd" />
+
+		<!-- sound -->
+		<sound path="obj/blockstackerdrop.vsnd" />
+		<sound path="obj/blockstackerlineclear.vsnd" />
+		<sound path="obj/blockstackerrotate.vsnd" />
+		<sound path="obj/breakoutbat.vsnd" />
+		<sound path="obj/breakoutbrick.vsnd" />
+		<sound path="obj/frogmove.vsnd" />
+		<sound path="obj/invadersenemydeath.vsnd" />
+		<sound path="obj/invadersenemyshoot.vsnd" />
+		<sound path="obj/invadersplayerdeath.vsnd" />
+		<sound path="obj/invadersplayershoot.vsnd" />
+		<sound path="obj/pangpop.vsnd" />
+		<sound path="obj/pangshoot.vsnd" />
+		<sound path="obj/ramithit.vsnd" />
+		<sound path="obj/ramitshoot.vsnd" />
+		<sound path="obj/snakeyfood.vsnd" />
+		<sound path="obj/commoncoin.vsnd" />
+		<sound path="obj/commondie.vsnd" />
+		<sound path="obj/commonone.vsnd" />
+		<sound path="obj/commononeminute.vsnd" />
+		<sound path="obj/commonreadygo.vsnd" />
+		<sound path="obj/commonsucces.vsnd" />
+		<sound path="obj/commonthree.vsnd" />
+		<sound path="obj/commontimeover.vsnd" />
+		<sound path="obj/commontwo.vsnd" />
+		<sound path="obj/mainback.vsnd" />
+		<sound path="obj/mainconfirm.vsnd" />
+		<sound path="obj/mainscore.vsnd" />
+		<sound path="obj/mainselect.vsnd" />
+    </sounds>
+</rom-definition>
