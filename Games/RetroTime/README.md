@@ -1,6 +1,4 @@
 # RetroTime
-![DownloadCountTotal](https://img.shields.io/github/downloads/joyrider3774/retrotime_vircon32/total?label=total%20downloads&style=plastic) ![DownloadCountLatest](https://img.shields.io/github/downloads/joyrider3774/retrotime_vircon32/latest/total?style=plastic) ![LatestVersion](https://img.shields.io/github/v/tag/joyrider3774/retrotime_vircon32?label=Latest%20version&style=plastic) ![License](https://img.shields.io/github/license/joyrider3774/retrotime_vircon32?style=plastic)
-
 <img src="screenshots/retrotime.png">
 
 RetroTime for vircon32 is a game containing 8 retro based games playable in 3 game modes being Retro Carousel, Time Attack and Lives mode. The game is a port from the Playdate version which was a port from the SDL2 version from my competition entry for Fuze 4 for Nintendo switch, in collaboration with Wireframe magazine. 
