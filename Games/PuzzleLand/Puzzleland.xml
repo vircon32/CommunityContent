@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Puzzeland" version="1.0" />
+    <binary path="obj/puzzleland.vbin" />
+    <textures>
+		<texture path="obj\puzzleland.vtex" />
+
+		<texture path="obj\Asheville_Sans_14_Bold_14.vtex" />
+		<texture path="obj\Mini_Sans_2X_14.vtex" />
+
+    </textures>
+    <sounds>
+		<sound path="obj/title.vsnd" />
+		<sound path="obj/game1.vsnd" />
+		<sound path="obj/game2.vsnd" />
+		<sound path="obj/oldman.vsnd" />
+		<sound path="obj/stage.vsnd" />
+
+		<sound path="obj/bridge.vsnd" />
+		<sound path="obj/drop.vsnd" />
+		<sound path="obj/elf.vsnd" />
+		<sound path="obj/error.vsnd" />
+		<sound path="obj/menu.vsnd" />
+		<sound path="obj/pickup.vsnd" />
+		<sound path="obj/rotate.vsnd" />
+		<sound path="obj/select.vsnd" />
+		<sound path="obj/stageend.vsnd" />
+		<sound path="obj/text.vsnd" />	
+    </sounds>
+</rom-definition>
