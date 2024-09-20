@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Waternet" version="1.0" />
+    <binary path="obj/waternet.vbin" />
+    <textures>
+		<texture path="obj\blue_green.vtex" />
+		<texture path="obj\black_white.vtex" />
+		<texture path="obj\fp_aquaduct.vtex" />
+		<texture path="obj\fp_brix.vtex" />	
+    </textures>
+    <sounds>
+		<sound path="obj/game.vsnd" />
+		<sound path="obj/title.vsnd" />
+		<sound path="obj/leveldone.vsnd" />
+		<sound path="obj/levelscleared.vsnd" />
+
+		<sound path="obj/gamemove.vsnd" />
+		<sound path="obj/error.vsnd" />
+		<sound path="obj/menuselect.vsnd" />
+		<sound path="obj/menuback.vsnd" />
+		<sound path="obj/gameaction.vsnd" />
+		<sound path="obj/menuacknowledge.vsnd" />
+    </sounds>
+</rom-definition>
