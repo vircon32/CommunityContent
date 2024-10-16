@@ -89,6 +89,10 @@ void CAudio_Init()
 		select_channel(i);
 		set_channel_volume(0.5);
 	}
+
+	//set music volume half of sound volume
+	select_channel(0);
+	set_channel_volume(0.25);
 }
 
 
