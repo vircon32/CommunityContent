@@ -1,0 +1,295 @@
+Date of Last Change: 
+
+Set:       Myriocosmos
+Copyright: 2007-2020 © Aymeric du Peloux
+Author:    Aymeric du Peloux
+Email:     aymdup@orange.fr
+Homepage:  http://aymericdupeloux.wixsite.com/sokoban
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+This Sokoban level set is published here with the author's permission.
+
+The level set is distributed in a text format, that can be imported
+by most of the major Sokoban programs.
+
+Enjoy!
+
+SOKOBAN Project         at http://sokobano.de/
+Sokoban WIKI            at http://sokobano.de/wiki/
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+MYRIOCOSMOS
+
+// 2007-2020 Copyright Aymeric du Peloux //
+
+1
+  ####
+###  #
+# *  ###
+# .#   #
+## $   #
+#  #* ##
+# @  ##
+#  ###
+####
+Title: Myriocosmos 1
+Author: Aymeric du Peloux
+
+2
+  ####
+ ##  #
+ # . #
+## * #####
+# @*$    #
+#  * #   #
+###  #####
+  ####
+Title: Myriocosmos 2
+Author: Aymeric du Peloux
+
+3
+#####
+#   #
+# #*####
+#    $ #
+# # * @#
+#.*  ###
+## # #
+ #   #
+ #####
+Title: Myriocosmos 3
+Author: Aymeric du Peloux
+
+4
+ #########
+ #   ##  #
+ #       #
+### ###  #
+# $ @ # ##
+#..* .#$#
+# $.$ # ##
+### ###  #
+ #       #
+ #   #  ##
+ ########
+Title: Myriocosmos 4
+Author: Aymeric du Peloux
+
+5
+      #####
+     ##   #
+     #    #
+    ##.#@##
+   ## .#  #
+  ##. .   #
+ ##  $ #  #
+##  $ #####
+#  $ ##
+# $ ##
+#  ##
+####
+Title: Myriocosmos 5
+Author: Aymeric du Peloux
+
+6
+   ####
+ ###  ##
+##     ##
+# ****+ #
+#    $  #
+##### # #
+    #   #
+    #####
+Title: Myriocosmos 6
+Author: Aymeric du Peloux
+
+7
+ ####
+ #  ###
+ #    #
+ # ** #
+ # * ##
+##$@ #
+#  .*#
+#  # #
+##   #
+ #####
+Title: Myriocosmos 7
+Author: Aymeric du Peloux
+
+8
+ #######
+## .   #
+# $+$  #
+# #*# ##
+#  $  #
+## . ##
+ #   #
+ #####
+Title: Myriocosmos 8
+Author: Aymeric du Peloux
+
+9
+##### ####
+#   ###  #
+# $ #....##
+##$@$   $ #
+ #   ##   #
+ ##  ######
+  ####
+Title: Myriocosmos 9
+Author: Aymeric du Peloux
+
+10
+  ####
+  #@ #
+###  ##
+# $$* #
+# #  *###
+# . *   #
+###  .  #
+  #######
+Title: Myriocosmos 10
+Author: Aymeric du Peloux
+
+11
+    #####
+   ## @ ##
+ ###  #  ###
+ #   ###   #
+ #$   #    #
+ # ####### #
+## . ###   #
+#.$ * #  ###
+#  .  #  ##
+###  ###  #
+ #  ##### ##
+ #      $  #
+ ##  ###   #
+  ##########
+Title: Myriocosmos 11
+Author: Aymeric du Peloux
+
+12
+  #####
+  #   #
+ ## #.###
+## * $  #
+#  $ *# #
+# #.# # #
+# #   # #
+#  ###  #
+##  @  ##
+ #######
+Title: Myriocosmos 12
+Author: Aymeric du Peloux
+
+13
+  ####
+###  #
+#@*  ##
+# **$ #
+## .  #
+#  # ##
+#     #
+###   #
+  #####
+Title: Myriocosmos 13
+Author: Aymeric du Peloux
+
+14
+ #######
+ #  # @#
+##$ $$ ##
+# $ #   #
+# #   # #
+#    ## ##
+## # ##  #
+#  ....  #
+#   ###  #
+##### ####
+Title: Myriocosmos 14
+Author: Aymeric du Peloux
+
+15
+ ####
+ #  ####
+##*  $ #
+#    . #
+# *  # #
+### **@#
+  #  ###
+  ####
+Title: Myriocosmos 15
+Author: Aymeric du Peloux
+
+16
+#####
+#@  # #####
+# # ### .##
+# $$$     #
+##$ #.$#  #
+ #  #. # ##
+ #$ #.$# #
+ #  #. # ##
+ #$ #.## ##
+ #    ##  #
+ ####..   #
+    ####  #
+       ####
+Title: Myriocosmos 16
+Author: Aymeric du Peloux
+
+17
+   ####
+   #  #
+####$.####
+# $    $ #
+#+.**..  #
+# $    ###
+#####$ #
+    #  #
+    ####
+Title: Myriocosmos 17
+Author: Aymeric du Peloux
+
+18
+ #### ####
+ #  ###  #
+ #     $ #
+## .**# @#
+#  #*.$ ##
+# $    ##
+#  # .##
+#######
+Title: Myriocosmos 18
+Author: Aymeric du Peloux
+
+19
+####
+#  ###
+# $  ##
+#   * ##
+## ** @##
+ # * .  ##
+ ##  * * #
+  #### # #
+     #   #
+     #####
+Title: Myriocosmos 19
+Author: Aymeric du Peloux
+
+20
+ ####
+ #  #
+ # .###
+##  $ ###
+# ***.$@#
+# * * * #
+#       #
+######  #
+     ####
+Title: Myriocosmos 20
+Author: Aymeric du Peloux

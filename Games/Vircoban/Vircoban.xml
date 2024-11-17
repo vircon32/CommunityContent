@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Vircoban" version="1.0" />
+    <binary path="obj/vircoban.vbin" />
+    <textures>
+		<texture path="obj\sokoban.vtex" />
+		<texture path="obj\Roboto_Black_20.vtex" />
+		<texture path="obj\Roboto_Black_30.vtex" />
+		<texture path="obj\Roboto_Black_60.vtex" />
+		<texture path="obj\Roboto_Light_15.vtex" />
+		
+    </textures>
+    <sounds>
+		<sound path="obj/title.vsnd" />
+		<sound path="obj/041415calmbgm.vsnd" />
+		<sound path="obj/periwinkle.vsnd" />
+		<sound path="obj/Puzzle Game 3.vsnd" />
+
+		<sound path="obj/back.vsnd" />
+		<sound path="obj/error.vsnd" />
+		<sound path="obj/menu.vsnd" />
+		<sound path="obj/move.vsnd" />
+		<sound path="obj/select.vsnd" />
+		<sound path="obj/stageend.vsnd" />
+
+    </sounds>
+</rom-definition>
