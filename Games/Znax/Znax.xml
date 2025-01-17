@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Znax" version="1.0" />
+    <binary path="obj/znax.vbin" />
+    <textures>
+		<texture path="obj\znax1.vtex" />
+		<texture path="obj\znax2.vtex" />
+		<texture path="obj\znax3.vtex" />
+
+		<texture path="obj\font_16.vtex" />
+		<texture path="obj\font_24.vtex" />
+		<texture path="obj\font1_25.vtex" />
+    </textures>
+    <sounds>
+		<sound path="obj/title.vsnd" />
+
+		<sound path="obj/blockselect.vsnd" />
+		<sound path="obj/delete.vsnd" />
+		<sound path="obj/error.vsnd" />
+		<sound path="obj/menu.vsnd" />
+		<sound path="obj/one.vsnd" />
+		<sound path="obj/oneminute.vsnd" />
+		<sound path="obj/readygo.vsnd" />
+		<sound path="obj/select.vsnd" />
+		<sound path="obj/three.vsnd" />
+		<sound path="obj/timeover.vsnd" />
+		<sound path="obj/two.vsnd" />
+		<sound path="obj/welcome.vsnd" />
+    </sounds>
+</rom-definition>
