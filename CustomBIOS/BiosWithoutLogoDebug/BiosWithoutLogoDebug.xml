@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="bios" title="Vircon32 BIOS without logo DEBUG" version="1.1" />
+    <binary path="obj/BiosWithoutLogoDebug.vbin" />
+    <textures>
+        <texture path="obj/BiosNoLogoTexture.vtex" />
+    </textures>
+    <sounds>
+        <sound path="obj/DummyBiosSound.vsnd" />
+    </sounds>
+</rom-definition>
