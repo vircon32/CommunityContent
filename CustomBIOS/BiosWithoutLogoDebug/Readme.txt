@@ -80,6 +80,22 @@ To-Do / Limitations
  
 -----------------------------------------------------------------------------
 
+Configuring Vircon32 to use a custom BIOS
+
+    By default,  Vircon32 will  use the Bios/StandardBios.v32  located in
+    the Vircon32 Emulator directory.
+
+	To best utilize a custom BIOS:
+
+        * copy  the custom  BIOS (under  a  unique name)  into the  Bios/
+          directory.
+
+        * open `Config-Settings.xml` and edit  the `<bios file=` entry to
+          specify the name  of your custom BIOS file.  Vircon32 will then
+          proceed to use this instead.
+
+-----------------------------------------------------------------------------
+
 Embedding BIOS debug subroutines for ready access
 
     If you  had your own  custom debug subroutine, to  facilitate access,
@@ -87,7 +103,7 @@ Embedding BIOS debug subroutines for ready access
     implementation-specific use case, but here is what we have settled on
     doing for our purposes:
 
-    * 3 debug subroutines (located in a file called `debug.asm`:
+    * three debug subroutines (located in a file called `debug.asm`:
       * _debug: display of a word of data (in hex) at a given x and y
       * _debugmemory: display of a range of memory addresses
       * _debugregs: display of the register array
@@ -172,8 +188,8 @@ License
     This program is free and open source. It is offered under
     the 3-Clause BSD License, which full text is the following:
     
-    Copyright 2023-2024 Carra.
-    All rights reserved.
+    Copyright 2024-2025 SUNY Corning Community College spring2025
+	Computer Organization class. All rights reserved.
     
     Redistribution and use in source and binary forms, with or
     without modification, are permitted provided that the

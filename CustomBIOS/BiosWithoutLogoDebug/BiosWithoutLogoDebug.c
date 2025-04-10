@@ -214,7 +214,7 @@ void decode_instruction (int word, int y, int immediate_value)
             {
                 print_at (x, y, "R");
                 x = x + 10;
-                itoa2 (srcreg, data, 10);
+                itoa2 (dstreg, data, 10);
                 print_at (x, y, data);
             }
             return;
