@@ -28,9 +28,14 @@ release of the Vircon32 Emulator and  DevTools from source (vs just using
 the available  release binaries). This  way students also got  some added
 exposure interacting with code and build processes they did not create.
 
-SKYWARD ESCAPE  is a  beautiful  example  of  a student  embracing  the
-concepts being learned in class while dabbling on their own in pursuit of
-some end result.
+SKYWARD ESCAPE is a beautiful example of a student embracing the concepts
+being learned in class while dabbling on their own in pursuit of some end
+result.
+
+## Vircon32 DevTools version
+
+Due  to the  use of  `%define` statements,  Vircon32 DevTools  v24.2.4 or
+later is required to build the cartridge.
 
 ## How to play
 
