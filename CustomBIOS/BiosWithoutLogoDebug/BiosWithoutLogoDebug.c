@@ -12,6 +12,8 @@
 struct string_data
 {
     int [40] name;
+	int      lower;
+	int      upper;
 };
 
 // ---------------------------------------------------------
@@ -525,52 +527,14 @@ void error_handler()
     {
         { "[RAM] " }, { "[BIOS]" }, { "[CART]" }, { "[CARD]" }
     };
-/*
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // initialize port name array
-    //
-	string_data *port             = (string_data *) malloc (7);
-
-	string_data [4] timeports =
-	{
-		{ "TIM_CurrentDate"  },
-		{ "TIM_CurrentTime"  },
-		{ "TIM_FrameCounter" },
-		{ "TIM_CycleCounter" }
-	};
-
-	string_data [1] rng_ports =
-	{
-		{ "RNG_CurrentValue" }
-	};
-
-	string_data [18] gpu_ports =
-	{
-		{ "GPU_Command"         },
-		{ "GPU_RemainingPixels" },
-		{ "GPU_ClearColor"      },
-		{ "GPU_MultiplyColor"   },
-		{ "GPU_ActiveBlending"  },
-		{ "GPU_SelectedTexture" },
-		{ "GPU_SelectedRegion"  },
-		{ "GPU_DrawingPointX"   },
-		{ "GPU_DrawingPointY"   },
-		{ "GPU_DrawingScaleX"   },
-		{ "GPU_DrawingScaleY"   },
-		{ "GPU_DrawingAngle"    },
-		{ "GPU_RegionMinX"      },
-		{ "GPU_RegionMinY"      },
-		{ "GPU_RegionMaxX"      },
-		{ "GPU_RegionMaxY"      },
-		{ "GPU_RegionHotspotX"  },
-		{ "GPU_RegionHotSpotY"  }
-	};
-
-	(port+0) = timeports;
-	(port+1) = &rng_ports;
-	(port+2) = &gpu_ports;
-	*/
+	memtype[0].lower        = 0x00000000;
+	memtype[0].upper        = 0x003FFFFF;
+	memtype[1].lower        = 0x10000000;
+	memtype[1].upper        = 0x100FFFFF;
+	memtype[2].lower        = 0x20000000;
+	memtype[2].upper        = 0x27FFFFFF;
+	memtype[3].lower        = 0x30000000;
+	memtype[3].upper        = 0x30003FFF;
 
     // ensure everything gets drawn
     end_frame();
@@ -671,9 +635,12 @@ void error_handler()
     //
     if (section                   != 1)
     {
+		// lookahead instruction logic
+		//
         addr                       = (int *)(instruction_pointer);
         pos                        = 9;
-        while (pos                <  15)
+		max                        = 5;
+        while (pos                <= (max * 3))
         {
             list[pos]              = (int)(addr); // addr of +N instruction
             list[pos+1]            = *(addr);     // actual hex of +N instruction
@@ -687,6 +654,15 @@ void error_handler()
             {
                 list[pos+2]        = 0;
             }
+
+			// lookahead upper bound check
+			//
+			if ((int)addr         == memtype[section].upper)
+			{
+				max                = pos / 3;
+				break;
+			}
+
             addr                   = addr + 1;
             pos                    = pos  + 3;
         }
@@ -708,23 +684,56 @@ void error_handler()
         list[pos]                  = (int)(addr);
         list[pos+1]                = instruction;
 
-        for (index = 3; index >= 0; index-=3)
+		min                        = 0;
+        for (index = 3; index >= min; index-=3)
         {
+			// lower bound check
+			//
+			if ((int)addr         == memtype[section].lower)
+			{
+				min                = index;
+				break;
+			}
+
             addr                   = addr - 1;
             immflag                = (*(addr) & 0x02000000) >> 25;
             if (immflag           == 1) // definitely cannot be an instruction
             {
                 list[index+2]      = *(addr);     // immediate value
+												  //
+				// lower bound check
+				//
+				if ((int)addr     == memtype[section].lower)
+				{
+					min            = index;
+					break;
+				}
                 addr               = addr - 1;
                 list[index]        = (int)(addr); // addr of instruction
                 list[index+1]      = *(addr);     // actual hex of instruction
             }
             else // could be an instruction
             {
+				// lower bound check
+				//
+				if ((int)addr     == memtype[section].lower)
+				{
+					min            = index;
+					break;
+				}
+
                 addr               = addr - 1; // check the previous for immediate flag
                 immflag            = (*(addr) & 0x02000000) >> 25;
                 if (immflag       == 1)
                 {
+					// lower bound check
+					//
+					if ((int)addr == memtype[section].lower)
+					{
+						min        = index;
+						break;
+					}
+
                     addr           = addr - 1; // if so, check the one before that
                     immflag        = (*(addr) & 0x02000000) >> 25;
                     if (immflag   == 1)
@@ -750,7 +759,7 @@ void error_handler()
         }
 
         y                          = 240;
-        for (index = 0; index < 5; index++)
+        for (index = min; index < max; index++)
         {
             if (list[(index*3)+1] == instruction)
             {
