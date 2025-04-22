@@ -3,14 +3,15 @@
 #include "video.h"
 #include "time.h"
 #include "string.h"
+#include "misc.h"
 
 // include project libraries
 #include "ErrorInfo.h"
 
 // Simplify opcode display
-struct instruction_opcode
+struct string_data
 {
-    int [7] name;
+    int [40] name;
 };
 
 // ---------------------------------------------------------
@@ -117,13 +118,12 @@ void decode_instruction (int word, int y, int immediate_value)
     int [11] data;
     int      x;
     int      flag;
-	int      needreg;
 
     //////////////////////////////////////////////////////////////////////////
     //
     // initialize our opcodes array with the available instructions
     //
-    instruction_opcode [64] opcodes =
+    string_data [64] opcodes =
     {
         { "HLT"  }, { "WAIT"  }, { "JMP"   }, { "CALL" },
         { "RET"  }, { "JT"    }, { "JF"    }, { "IEQ"  },
@@ -153,7 +153,6 @@ void decode_instruction (int word, int y, int immediate_value)
     srcreg    = (word & 0x001E0000) >> 17;
     addrmode  = (word & 0x0001C000) >> 14;
     portnum   = (word & 0x00003FFF);
-	needreg   = 0;
 
     /////////////////////////////////////////////////////////////////////////////
     //
@@ -214,7 +213,7 @@ void decode_instruction (int word, int y, int immediate_value)
             {
                 print_at (x, y, "R");
                 x = x + 10;
-                itoa2 (dstreg, data, 10);
+                itoa2 (dstreg, data, 10); // dstreg is used by all, apparently
                 print_at (x, y, data);
             }
             return;
@@ -226,34 +225,32 @@ void decode_instruction (int word, int y, int immediate_value)
     // ALL the first parameter processing for two parameter
     // instructions (with special cases for MOV and OUT)
     //
-    if (opcode           == 0x13) // MOV
+    if (opcode == 0x13) // MOV
     {
-        if (addrmode     >  4) // MOV addressing modes 5, 6, and 7 we dereference
+        if (addrmode >  4) // MOV addressing modes 5, 6, and 7 we dereference
         {
             print_at (x, y, "[");
-            x             = x + 10;
-			needreg       = 1;
+            x = x + 10;
         }
 
-        if ((addrmode    == 5) || (addrmode == 7))
+        if ((addrmode == 5) || (addrmode == 7))
         {
             if (addrmode == 7)
             {
                 print_at (x, y, "R");
-                x         = x + 10;
+                x = x + 10;
                 itoa2 (srcreg, data, 10);
                 print_at (x, y, data);
-                x         = x + (strlen (data) * 10);
+                x = x + (strlen (data) * 10);
                 print_at (x, y, "+");
-                x         = x + 10;
+                x = x + 10;
             }
 
             // print out `immediate_value`
             print_at (x, y, "0x");
-            x             = x + 20;
+            x = x + 20;
             itoa2 (immediate_value, data, 16);
             print_at (x, y, data);
-            x             = x + (strlen (data) * 10);
         }
         else // otherwise, a register reference is made
         {
@@ -320,33 +317,33 @@ void decode_instruction (int word, int y, int immediate_value)
             x = x + 10;
         }
     }
-    else if (opcode      == 0x13) // MOV
+    else if (opcode == 0x13) // MOV
     {
-        if ((addrmode    >= 2) && (addrmode <= 4))
+        if ((addrmode >= 2) && (addrmode <= 4))
         {
             print_at (x, y, "[");
-            x             = x + 10;
-            flag          = 1;
+            x = x + 10;
+            flag         = 1;
 
             if (addrmode == 4)
             {
                 print_at (x, y, "R");
-                x         = x + 10;
+                x = x + 10;
                 itoa2 (srcreg, data, 10);
                 print_at (x, y, data);
-                x         = x + (strlen (data) * 10);
+                x = x + (strlen (data) * 10);
                 print_at (x, y, "+");
-                x         = x + 10;
+                x = x + 10;
             }
         }
     }
-    else if (opcode      == 0x18) // OUT special case (only if immflag is set)
+    else if (opcode == 0x18) // OUT special case (only if immflag is set)
     {
-        if (immflag      == 1)
+        if (immflag == 1)
         {
             print_at (x, y, "[");
             x = x + 10;
-            flag          = 1;
+            flag         = 1;
         }
     }
 
@@ -354,7 +351,7 @@ void decode_instruction (int word, int y, int immediate_value)
     //
     // AVERAGE CASE (not MOV)
     //
-    if ((immflag  == 1) && (needreg == 0)) // immediate value variant
+    if (immflag  == 1) // immediate value variant
     {
         print_at (x, y, "0x");
         x = x + 20;
@@ -520,15 +517,60 @@ void error_handler()
     int      max;
     int      section;
     
-
     //////////////////////////////////////////////////////////////////////////
     //
     // initialize memory type array with their identified names    
     //
-    instruction_opcode [4] memtype =
+    string_data [4] memtype =
     {
         { "[RAM] " }, { "[BIOS]" }, { "[CART]" }, { "[CARD]" }
     };
+/*
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // initialize port name array
+    //
+	string_data *port             = (string_data *) malloc (7);
+
+	string_data [4] timeports =
+	{
+		{ "TIM_CurrentDate"  },
+		{ "TIM_CurrentTime"  },
+		{ "TIM_FrameCounter" },
+		{ "TIM_CycleCounter" }
+	};
+
+	string_data [1] rng_ports =
+	{
+		{ "RNG_CurrentValue" }
+	};
+
+	string_data [18] gpu_ports =
+	{
+		{ "GPU_Command"         },
+		{ "GPU_RemainingPixels" },
+		{ "GPU_ClearColor"      },
+		{ "GPU_MultiplyColor"   },
+		{ "GPU_ActiveBlending"  },
+		{ "GPU_SelectedTexture" },
+		{ "GPU_SelectedRegion"  },
+		{ "GPU_DrawingPointX"   },
+		{ "GPU_DrawingPointY"   },
+		{ "GPU_DrawingScaleX"   },
+		{ "GPU_DrawingScaleY"   },
+		{ "GPU_DrawingAngle"    },
+		{ "GPU_RegionMinX"      },
+		{ "GPU_RegionMinY"      },
+		{ "GPU_RegionMaxX"      },
+		{ "GPU_RegionMaxY"      },
+		{ "GPU_RegionHotspotX"  },
+		{ "GPU_RegionHotSpotY"  }
+	};
+
+	(port+0) = timeports;
+	(port+1) = &rng_ports;
+	(port+2) = &gpu_ports;
+	*/
 
     // ensure everything gets drawn
     end_frame();

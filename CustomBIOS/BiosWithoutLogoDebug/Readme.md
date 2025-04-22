@@ -20,20 +20,20 @@ need of decoding the instruction data you are provided in hex.
 
 -----------------------------------------------------------------------------
 
-# Screenshot
+## Screenshot
 
 ![screenshot](Screenshot-BiosWithoutLogoDebug.png)
 
 -----------------------------------------------------------------------------
 
-# Additions
+## Additions
 
 The following is an overview of the changes made to `BiosWithoutLogo` for
 any deeper investigations:
 
-The addition  of a struct  called `instruction_opcode` to  store assembly
-instruction  mneumonics that  are  displayed. Also  used  to display  the
-memory section of the error.
+The  addition  of  a  struct   called  `string_data`  to  store  assembly
+instruction mneumonics  and portnames  that are  displayed. Also  used to
+display the memory section of the error.
 
 Due   to   an   issue   with  the   Vircon32   `itoa()`   function   (see
 https://github.com/vircon32/ComputerSoftware/issues/16),   any   DevTools
@@ -50,7 +50,7 @@ BIOS.
 
 -----------------------------------------------------------------------------
 
-# Modifications / Changes
+## Modifications / Changes
 
 The   bulk   of   changes   to  existing   functions   takes   place   in
 `error_handler()`, where we determine not  only the instruction at issue,
@@ -58,11 +58,12 @@ but we display the  previous two leading up to it,  and the following two
 after it, for a nice contextual display of debugging information.
 
 The offset of each instruction is  also displayed, which can be used with
-the assembler's `-g` argument.
+the assembler's  `-g` argument to locate  the specific place in  the code
+where the problem is taking place.
 
 -----------------------------------------------------------------------------
 
-# To-Do / Limitations
+## To-Do / Limitations
 
 Bounds  checking  is  not  complete   in  the  current  version.  If  the
 prior  instructions fall  below the  current memory  region, or  the next
@@ -70,10 +71,10 @@ instructions are beyond  it, no restriction is  currently performed (such
 scenarios would  likely cause  invalid output or  throw a  machine access
 error).
 
-Port name translations  are not performed. You'll just get  the hex value
-of the port. Which if you have a  good reference handy won't be as big of
-a problem. No reason this hasn't yet  been done aside from time. Is not a
-difficult task to implement.
+Port  name translations  are now  performed, however  the "Command"  port
+options are  not translated: you  will just get  the raw hex  value. This
+should still be more than good  enough to help you locate the instruction
+in question.
 
 Obviously  our decoding  will  not  know about  any  of your  established
 labels. You will just see raw hex offsets. No way around this.
@@ -81,12 +82,9 @@ labels. You will just see raw hex offsets. No way around this.
 No  decoding  will  be  done for  BIOS-originating  errors,  for  obvious
 reasons.
 
-The formatting pedant in me would love to column-align the decoded output
-of assembly instructions, parameters.
-
 -----------------------------------------------------------------------------
 
-# Configuring Vircon32 to use a custom BIOS
+## Configuring Vircon32 to use a custom BIOS
 
 By default,  Vircon32 will use  the Bios/StandardBios.v32 located  in the
 Vircon32 Emulator directory.
@@ -98,27 +96,27 @@ To best utilize a custom BIOS:
 
 -----------------------------------------------------------------------------
 
-# Embedding BIOS debug subroutines for ready access
+## Embedding BIOS debug subroutines for ready access
 
 If  you had  your  own  custom debug  subroutine,  to facilitate  access,
 it   could  be   added  to   the  BIOS   data.  This   will  be   a  very
 implementation-specific use  case, but  here is what  we have  settled on
 doing for our purposes:
 
-* three debug subroutines (located in a file called `debug.asm`:
-  * `_debug`: display of a word of data (in hex) at a given x and y
-  * `_debugmemory`: display of a range of memory addresses
-  * `_debugregs`: display of the register array
+Three debug subroutines (located in a file called `debug.asm`:
+* `_debug`: display of a word of data (in hex) at a given x and y
+* `_debugmemory`: display of a range of memory addresses
+* `_debugregs`: display of the register array
     
 After  compiling,  but before  assembling,  append  the contents  of  the
 `debug.asm` to the compiler-generated assembly output:
 
-  * `cat ../debug/debug.asm >> obj/BiosWithoutLogoDebug.asm`
+* `cat ../debug/debug.asm >> obj/BiosWithoutLogoDebug.asm`
 
 When assembling, add  the `-g` argument to generate  the debugging output
 file during the `assemble` step:
 
-  * `assemble obj/BiosWithoutLogoDebug.asm -o obj/BiosWithoutLogoDebug.vbin -b -g`
+* `assemble obj/BiosWithoutLogoDebug.asm -o obj/BiosWithoutLogoDebug.vbin -b -g`
 
 This simple addition can be made to the existing logic in `Make.sh`.
 
@@ -174,7 +172,7 @@ int debug (int value, int x, int y)
 
 -----------------------------------------------------------------------------
 
-# Credits
+## Credits
 
 All  existing  credits  for  the  `BiosWithoutLogo`  BIOS,  with  further
 modifications from:
@@ -189,7 +187,7 @@ Organization class at SUNY Corning Community College.
 
 -----------------------------------------------------------------------------
 
-# License
+## License
 
 This program  is free and open  source. It is offered  under the 3-Clause
 BSD License, which full text is the following:
