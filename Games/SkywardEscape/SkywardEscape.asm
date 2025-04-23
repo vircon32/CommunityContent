@@ -167,7 +167,7 @@ _game_menu:
     pop   R0
 
     wait
-    in    R10, INP_GamepadButtonStart ; Press enter to start the game
+    in    R10, INP_GamepadButtonStart ; Press start to begin the game
     ieq   R10, 1
     jf    R10, _game_menu
 
@@ -1274,7 +1274,7 @@ _game_over_menu_loop:
     pop   R0
     pop   R0
 
-    mov   R5, _print_enter
+    mov   R5, _print_start
     push  R5
     mov   R0, 265
     push  R0
@@ -1286,7 +1286,7 @@ _game_over_menu_loop:
     pop   R0
 
     isub  R8, 1
-    in    R10, INP_GamepadButtonStart ; Press enter to start the game
+    in    R10, INP_GamepadButtonStart ; Press start to begin the game
     ieq   R10, 1
     jf    R10, _game_over_menu_loop
 
@@ -1484,5 +1484,5 @@ _print_sec:
 _print_game_end:
     string "You Died!"
 
-_print_enter:
-    string "PRESS ENTER"
+_print_start:
+    string "PRESS START"

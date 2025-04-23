@@ -42,6 +42,6 @@ later is required to build the cartridge.
 Skyward Escape  is a  game where  you fly  a plane  and attempt  to evade
 pursuing missiles. It is a simple game:
 
-Press START (Enter on Keyboard) to Begin.
+Press START (by default Enter on a Keyboard) to Begin.
 Directional arrows to orient the plane.
 
