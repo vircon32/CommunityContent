@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+    <rom type="cartridge" title="Haunty Ghost" version="1.0" />
+    <binary path="obj/HauntyGhost.vbin" />
+    <textures>
+        <texture path="obj/alpha.vtex" />
+        <texture path="obj/brickBackani1.vtex" />
+        <texture path="obj/brickBackani2.vtex" />
+        <texture path="obj/brickBackani3.vtex" />
+        <texture path="obj/bottomBorder.vtex" />
+        <texture path="obj/mainMenuani1.vtex" />
+        <texture path="obj/mainMenuani2.vtex" />
+        <texture path="obj/mainMenuani3.vtex" />
+    </textures>  
+    <sounds>
+    </sounds>
+</rom-definition>
