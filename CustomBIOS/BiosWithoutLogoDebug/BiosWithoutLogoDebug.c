@@ -120,6 +120,8 @@ void decode_instruction (int word, int y, int immediate_value)
     int [11] data;
     int      x;
     int      flag;
+	int      category;
+	int      attribute;
 
     //////////////////////////////////////////////////////////////////////////
     //
@@ -145,26 +147,159 @@ void decode_instruction (int word, int y, int immediate_value)
         { "ACOS" }, { "ATAN2" }, { "LOG"   }, { "POW"  }
     };
 
-    /////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // initialize our port category arrays with the available port names
+    //
+    //////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // time port names
+    //
+	string_data [4] tim_ports =
+	{
+		{ "TIM_CurrentDate"          },
+		{ "TIM_CurrentTime"          },
+		{ "TIM_FrameCounter"         },
+		{ "TIM_CycleCounter"         }
+	};
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // RNG port names
+    //
+	string_data [1] rng_ports =
+	{
+		{ "RNG_CurrentValue"         }
+	};
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // GPU port names
+    //
+	string_data [18] gpu_ports =
+	{
+		{ "GPU_Command"              },
+		{ "GPU_RemainingPixels"      },
+		{ "GPU_ClearColor"           },
+		{ "GPU_MultiplyColor"        },
+		{ "GPU_ActiveBlending"       },
+		{ "GPU_SelectedTexture"      },
+		{ "GPU_SelectedRegion"       },
+		{ "GPU_DrawingPointX"        },
+		{ "GPU_DrawingPointY"        },
+		{ "GPU_DrawingScaleX"        },
+		{ "GPU_DrawingScaleY"        },
+		{ "GPU_DrawingAngle"         },
+		{ "GPU_RegionMinX"           },
+		{ "GPU_RegionMinY"           },
+		{ "GPU_RegionMaxX"           },
+		{ "GPU_RegionMaxY"           },
+		{ "GPU_RegionHotspotX"       },
+		{ "GPU_RegionHotspotY"       }
+	};
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // SPU port names
+    //
+	string_data [14] spu_ports =
+	{
+		{ "SPU_Command"              },
+		{ "SPU_GlobalVolume"         },
+		{ "SPU_SelectedSound"        },
+		{ "SPU_SelectedChannel"      },
+		{ "SPU_SoundLength"          },
+		{ "SPU_SoundPlayWithLoop"    },
+		{ "SPU_SoundLoopStart"       },
+		{ "SPU_SoundLoopEnd"         },
+		{ "SPU_ChannelState"         },
+		{ "SPU_ChannelAssignedSound" },
+		{ "SPU_ChannelVolume"        },
+		{ "SPU_ChannelSpeed"         },
+		{ "SPU_ChannelLoopEnabled"   },
+		{ "SPU_ChannelPosition"      }
+	};
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // INP port names
+    //
+	string_data [13] inp_ports =
+	{
+		{ "INP_SelectedGamepad"      },
+		{ "INP_GamepadConnected"     },
+		{ "INP_GamepadLeft"          },
+		{ "INP_GamepadRight"         },
+		{ "INP_GamepadUp"            },
+		{ "INP_GamepadDown"          },
+		{ "INP_GamepadButtonStart"   },
+		{ "INP_GamepadButtonA"       },
+		{ "INP_GamepadButtonB"       },
+		{ "INP_GamepadButtonX"       },
+		{ "INP_GamepadButtonY"       },
+		{ "INP_GamepadButtonL"       },
+		{ "INP_GamepadButtonR"       }
+	};
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // CAR port names
+    //
+	string_data [4] car_ports =
+	{
+		{ "CAR_Connected"            },
+		{ "CAR_ProgramROMSize"       },
+		{ "CAR_NumberOfTextures"     },
+		{ "CAR_NumberOfSounds"       }
+	};
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // MEM port names
+    //
+	string_data [1] mem_ports =
+	{
+		{ "MEM_Connected"            }
+	};
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // connect all the categories together
+    //
+	string_data **port   = (string_data **) malloc (sizeof (string_data *)*7);
+	*(port+0)            = tim_ports;
+	*(port+1)            = rng_ports;
+	*(port+2)            = gpu_ports;
+	*(port+3)            = spu_ports;
+	*(port+4)            = inp_ports;
+	*(port+5)            = car_ports;
+	*(port+6)            = mem_ports;
+
+    //////////////////////////////////////////////////////////////////////////
     //
     // mask out and obtain individual instruction elements
     //
-    opcode    = (word & 0xFC000000) >> 26;
-    immflag   = (word & 0x02000000) >> 25;
-    dstreg    = (word & 0x01E00000) >> 21;
-    srcreg    = (word & 0x001E0000) >> 17;
-    addrmode  = (word & 0x0001C000) >> 14;
-    portnum   = (word & 0x00003FFF);
+    opcode               = (word & 0xFC000000) >> 26;
+    immflag              = (word & 0x02000000) >> 25;
+    dstreg               = (word & 0x01E00000) >> 21;
+    srcreg               = (word & 0x001E0000) >> 17;
+    addrmode             = (word & 0x0001C000) >> 14;
+    portnum              = (word & 0x00003FFF);
 
-    /////////////////////////////////////////////////////////////////////////////
+	category             = (portnum & 0x00000700) >> 8;
+	attribute            = (portnum & 0x000000FF);
+
+    //////////////////////////////////////////////////////////////////////////
     //
     // display the obtained instruction
     //
-    x         = 169;
+    x                    = 169;
     print_at (x, y, opcodes[opcode].name);
-    x         = x + ((strlen (opcodes[opcode].name)+1)*10);
+    x                    = x + ((strlen (opcodes[opcode].name)+1)*10);
 
-    /////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
     //
     // special case processing:
     //   * zero parameter instructions (we're done)
@@ -204,17 +339,17 @@ void decode_instruction (int word, int y, int immediate_value)
         case 0x3B: // SIN
         case 0x3C: // ACOS
         case 0x3E: // LOG
-            if (immflag  == 1)
+            if (immflag == 1)
             {
                 print_at (x, y, "0x");
-                x = x + 20;
+                x        = x + 20;
                 itoa2 (immediate_value, data, 16);
                 print_at (x, y, data);
             }
             else // register variant
             {
                 print_at (x, y, "R");
-                x = x + 10;
+                x        = x + 10;
                 itoa2 (dstreg, data, 10); // dstreg is used by all, apparently
                 print_at (x, y, data);
             }
@@ -227,15 +362,16 @@ void decode_instruction (int word, int y, int immediate_value)
     // ALL the first parameter processing for two parameter
     // instructions (with special cases for MOV and OUT)
     //
-    if (opcode == 0x13) // MOV
+    if (opcode          == 0x13) // MOV
     {
         if (addrmode >  4) // MOV addressing modes 5, 6, and 7 we dereference
         {
             print_at (x, y, "[");
-            x = x + 10;
+            x            = x + 10;
         }
 
-        if ((addrmode == 5) || (addrmode == 7))
+        if ((addrmode   == 5)  ||
+			(addrmode   == 7))
         {
             if (addrmode == 7)
             {
@@ -273,11 +409,8 @@ void decode_instruction (int word, int y, int immediate_value)
     }
     else if (opcode == 0x18) // OUT: first parameter is always a port number
     {
-        print_at (x, y, "0x");
-        x = x + 20;
-        itoa2 (portnum, data, 16);
-        print_at (x, y, data);
-        x = x + (strlen (data) * 10);
+        print_at (x, y, (*(port+category)+attribute) -> name);
+        x            = x + (strlen ((*(port+category)+attribute) -> name) * 10);
     }
     else // AVERAGE CASE: any other two parameter instruction; show dstreg
     {
@@ -363,11 +496,8 @@ void decode_instruction (int word, int y, int immediate_value)
     }
     else if (opcode == 0x17) // IN special case (port number)
     {
-        print_at (x, y, "0x");
-        x = x + 20;
-        itoa2 (portnum, data, 16);
-        print_at (x, y, data);
-        x = x + (strlen (data) * 10);
+        print_at (x, y, (*(port+category)+attribute) -> name);
+        x            = x + (strlen ((*(port+category)+attribute) -> name) * 10);
     }
     else // register variant
     {
