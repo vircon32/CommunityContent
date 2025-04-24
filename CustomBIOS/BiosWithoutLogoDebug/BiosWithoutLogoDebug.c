@@ -821,63 +821,64 @@ void error_handler()
         list[pos]                  = (int)(addr);
         list[pos+1]                = instruction;
 
-		min                        = 0;
-        for (index = 3; index >= min; index-=3)
-        {
-			// lower bound check
-			//
-			if ((int)addr         == memtype[section].lower)
+		// lower bound check
+		//
+		if ((int)addr             == memtype[section].lower)
+		{
+			min                    = pos;
+		}
+		else
+		{
+			min                        = 0;
+			for (index = 3; index >= min; index-=3)
 			{
-				min                = index / 3;
-				break;
-			}
-
-            addr                   = addr - 1;
-            immflag                = (*(addr) & 0x02000000) >> 25;
-            if (immflag           == 1) // definitely cannot be an instruction
-            {
-                list[index+2]      = *(addr);     // immediate value
-                addr               = addr - 1;
-                list[index]        = (int)(addr); // addr of instruction
-                list[index+1]      = *(addr);     // actual hex of instruction
-            }
-            else // could be an instruction
-            {
-                addr               = addr - 1; // check the previous for immediate flag
-                immflag            = (*(addr) & 0x02000000) >> 25;
-                if (immflag       == 1)
-                {
-					// lower bound check
-					//
-					if ((int)addr == memtype[section].lower)
+				addr                   = addr - 1;
+				immflag                = (*(addr) & 0x02000000) >> 25;
+				if (immflag           == 1) // definitely cannot be an instruction
+				{
+					list[index+2]      = *(addr);     // immediate value
+					addr               = addr - 1;
+					list[index]        = (int)(addr); // addr of instruction
+					list[index+1]      = *(addr);     // actual hex of instruction
+				}
+				else // could be an instruction
+				{
+					addr               = addr - 1; // check the previous for immediate flag
+					immflag            = (*(addr) & 0x02000000) >> 25;
+					if (immflag       == 1)
 					{
-						min        = index / 3;
-						break;
+						addr           = addr - 1; // if so, check the one before that
+						immflag        = (*(addr) & 0x02000000) >> 25;
+						if (immflag   == 1)
+						{
+							addr       = addr + 2;
+						}
+						else
+						{
+							addr       = addr + 1;
+						}
+						list[index]    = (int)(addr); // addr of instruction
+						list[index+1]  = *(addr);     // actual hex of instruction
+						list[index+2]  = *(addr+1);   // immediate value
+					}        
+					else
+					{
+						addr           = addr + 1;
+						list[index]    = (int)(addr); // addr of instruction
+						list[index+1]  = *(addr);     // actual hex of instruction
+						list[index+2]  = 0;           // immediate value
 					}
+				}
 
-                    addr           = addr - 1; // if so, check the one before that
-                    immflag        = (*(addr) & 0x02000000) >> 25;
-                    if (immflag   == 1)
-                    {
-                        addr       = addr + 2;
-                    }
-                    else
-                    {
-                        addr       = addr + 1;
-                    }
-                    list[index]    = (int)(addr); // addr of instruction
-                    list[index+1]  = *(addr);     // actual hex of instruction
-                    list[index+2]  = *(addr+1);   // immediate value
-                }        
-                else
-                {
-                    addr           = addr + 1;
-                    list[index]    = (int)(addr); // addr of instruction
-                    list[index+1]  = *(addr);     // actual hex of instruction
-                    list[index+2]  = 0;           // immediate value
-                }
-            }
-        }
+				// lower bound check
+				//
+				if ((int)addr         == memtype[section].lower)
+				{
+					min                = index;
+					break;
+				}
+			}
+		}
 
         y                          = 240;
         for (index = min; index < max; index++)
