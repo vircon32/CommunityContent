@@ -389,6 +389,7 @@ void decode_instruction (int word, int y, int immediate_value)
             x = x + 20;
             itoa2 (immediate_value, data, 16);
             print_at (x, y, data);
+			x = x + (strlen (data) * 10);
         }
         else // otherwise, a register reference is made
         {
@@ -428,7 +429,7 @@ void decode_instruction (int word, int y, int immediate_value)
     // Display the parameter separating comma and space
     //
     print_at (x, y, ", ");
-    x = x + 20;
+    x                = x + 20;
 
     //////////////////////////////////////////////////////////////////////////
     //
@@ -452,25 +453,30 @@ void decode_instruction (int word, int y, int immediate_value)
             x = x + 10;
         }
     }
-    else if (opcode == 0x13) // MOV
+    else if (opcode      == 0x13) // MOV
     {
-        if ((addrmode >= 2) && (addrmode <= 4))
+        if ((addrmode    >= 2)  &&
+			(addrmode    <= 4))
         {
             print_at (x, y, "[");
-            x = x + 10;
-            flag         = 1;
+            x             = x + 10;
+            flag          = 1;
 
             if (addrmode == 4)
             {
                 print_at (x, y, "R");
-                x = x + 10;
+                x         = x + 10;
                 itoa2 (srcreg, data, 10);
                 print_at (x, y, data);
-                x = x + (strlen (data) * 10);
+                x         = x + (strlen (data) * 10);
                 print_at (x, y, "+");
-                x = x + 10;
+                x         = x + 10;
             }
         }
+		else if (addrmode >= 5)
+		{
+			flag          = 2;
+		}
     }
     else if (opcode == 0x18) // OUT special case (only if immflag is set)
     {
@@ -486,7 +492,7 @@ void decode_instruction (int word, int y, int immediate_value)
     //
     // AVERAGE CASE (not MOV)
     //
-    if (immflag  == 1) // immediate value variant
+    if ((immflag  == 1) && (flag != 2)) // immediate value variant
     {
         print_at (x, y, "0x");
         x = x + 20;
@@ -502,10 +508,10 @@ void decode_instruction (int word, int y, int immediate_value)
     else // register variant
     {
         print_at (x, y, "R");
-        x = x + 10;
+        x            = x + 10;
         itoa2 (srcreg, data, 10);
         print_at (x, y, data);
-        x = x + (strlen (data) * 10);
+        x            = x + (strlen (data) * 10);
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -770,7 +776,7 @@ void error_handler()
         addr                       = (int *)(instruction_pointer);
         pos                        = 9;
 		max                        = 5;
-        while (pos                <= (max * 3))
+        while (pos                <  (max * 3))
         {
             list[pos]              = (int)(addr); // addr of +N instruction
             list[pos+1]            = *(addr);     // actual hex of +N instruction
@@ -789,7 +795,7 @@ void error_handler()
 			//
 			if ((int)addr         == memtype[section].upper)
 			{
-				max                = pos / 3;
+				max                = (pos + 3) / 3;
 				break;
 			}
 
@@ -800,6 +806,7 @@ void error_handler()
         // look back, get to instruction
         pos                        = 6;
         immflag                    = (instruction & 0x02000000) >> 25;
+
         if (immflag               == 1)
         {
             addr                   = (int *)(instruction_pointer-2);
@@ -821,7 +828,7 @@ void error_handler()
 			//
 			if ((int)addr         == memtype[section].lower)
 			{
-				min                = index;
+				min                = index / 3;
 				break;
 			}
 
@@ -830,28 +837,12 @@ void error_handler()
             if (immflag           == 1) // definitely cannot be an instruction
             {
                 list[index+2]      = *(addr);     // immediate value
-												  //
-				// lower bound check
-				//
-				if ((int)addr     == memtype[section].lower)
-				{
-					min            = index;
-					break;
-				}
                 addr               = addr - 1;
                 list[index]        = (int)(addr); // addr of instruction
                 list[index+1]      = *(addr);     // actual hex of instruction
             }
             else // could be an instruction
             {
-				// lower bound check
-				//
-				if ((int)addr     == memtype[section].lower)
-				{
-					min            = index;
-					break;
-				}
-
                 addr               = addr - 1; // check the previous for immediate flag
                 immflag            = (*(addr) & 0x02000000) >> 25;
                 if (immflag       == 1)
@@ -860,7 +851,7 @@ void error_handler()
 					//
 					if ((int)addr == memtype[section].lower)
 					{
-						min        = index;
+						min        = index / 3;
 						break;
 					}
 
