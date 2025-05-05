@@ -28,3 +28,8 @@ https://github.com/vircon32
 ## 📜 License
 
 MIT License – free to use, modify, and share.
+
+## 👤 Author
+
+Created by **glebasos**  
+Original repository: [https://github.com/glebasos/FlappyBird_Vircon32](https://github.com/glebasos/FlappyBird_Vircon32)
