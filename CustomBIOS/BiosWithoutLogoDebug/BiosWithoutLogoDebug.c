@@ -664,18 +664,18 @@ void error_handler()
     //
     // initialize memory type array with their identified names    
     //
-    string_data [4] memtype     =
+    string_data [4] memtype         =
     {
         { "[RAM] " }, { "[BIOS]" }, { "[CART]" }, { "[CARD]" }
     };
-    memtype[0].lower            = 0x00000000;
-    memtype[0].upper            = 0x003FFFFF;
-    memtype[1].lower            = 0x10000000;
-    memtype[1].upper            = 0x100FFFFF;
-    memtype[2].lower            = 0x20000000;
-    memtype[2].upper            = 0x27FFFFFF;
-    memtype[3].lower            = 0x30000000;
-    memtype[3].upper            = 0x30003FFF;
+    memtype[0].lower                = 0x00000000;
+    memtype[0].upper                = 0x003FFFFF;
+    memtype[1].lower                = 0x10000000;
+    memtype[1].upper                = 0x100FFFFF;
+    memtype[2].lower                = 0x20000000;
+    memtype[2].upper                = 0x27FFFFFF;
+    memtype[3].lower                = 0x30000000;
+    memtype[3].upper                = 0x30003FFF;
 
     // ensure everything gets drawn
     end_frame ();
@@ -748,8 +748,8 @@ void error_handler()
     };
     
     // write the appropriate message for this error code
-    if ((error_code               >= 0) &&
-        (error_code               <  (int) error_unknown))
+    if ((error_code                   >= 0) &&
+        (error_code                   <  (int) error_unknown))
     {
         draw_message_screen (&error_messages[error_code]);
     }
@@ -762,11 +762,11 @@ void error_handler()
     //
     // Ascertain and display type of memory where error condition occurred
     //
-    section                        = (instruction_pointer & 0x30000000) >> 28;
+    section                            = (instruction_pointer & 0x30000000) >> 28;
     print_at (579, 0, memtype[section].name);
     
     // now print the related hex values
-    x                              = 49;
+    x                                  = 49;
     set_multiply_color (error_colors_values);
     print_hex_value (x, 160, "Instruction Pointer", instruction_pointer);
     print_hex_value (x, 180, "Instruction        ", instruction);
@@ -774,63 +774,63 @@ void error_handler()
 
     // do not do instruction dump for BIOS errors
     //
-    if (section                   != 1)
+    if (section                       != 1)
     {
         // lookahead instruction logic
         //
-        addr                       = (int *)(instruction_pointer);
-        pos                        = 9;
-        max                        = 5;
-        while (pos                <  (max * 3))
+        addr                           = (int *)(instruction_pointer);
+        pos                            = 9;
+        max                            = 5;
+        while (pos                    <  (max * 3))
         {
-            list[pos]              = (int)(addr); // addr of +N instruction
-            list[pos+1]            = *(addr);     // actual hex of +N instruction
-            immflag                = (*(addr) & 0x02000000) >> 25;
-            if (immflag           == 1)
+            list[pos]                  = (int)(addr); // addr of +N instruction
+            list[pos+1]                = *(addr);     // actual hex of +N instruction
+            immflag                    = (*(addr) & 0x02000000) >> 25;
+            if (immflag               == 1)
             {
-                addr               = addr + 1;
-                list[pos+2]        = *(addr);     // immediate value to +N instruction
+                addr                   = addr + 1;
+                list[pos+2]            = *(addr);     // immediate value to +N instruction
             }
             else
             {
-                list[pos+2]        = 0;
+                list[pos+2]            = 0;
             }
 
             // lookahead upper bound check
             //
-            if ((int)addr         == memtype[section].upper)
+            if ((int)addr             == memtype[section].upper)
             {
-                max                = (pos + 3) / 3;
+                max                    = (pos + 3) / 3;
                 break;
             }
 
-            addr                   = addr + 1;
-            pos                    = pos  + 3;
+            addr                       = addr + 1;
+            pos                        = pos  + 3;
         }
 
         // look back, get to instruction
-        pos                        = 6;
-        immflag                    = (instruction & 0x02000000) >> 25;
+        pos                            = 6;
+        immflag                        = (instruction & 0x02000000) >> 25;
 
-        if (immflag               == 1)
+        if (immflag                   == 1)
         {
-            addr                   = (int *)(instruction_pointer-2);
-            list[pos+2]            = *(addr+1);
+            addr                       = (int *)(instruction_pointer-2);
+            list[pos+2]                = *(addr+1);
         }
         else
         {
-            addr                   = (int *)(instruction_pointer-1);
-            list[pos+2]            = 0;
+            addr                       = (int *)(instruction_pointer-1);
+            list[pos+2]                = 0;
         }
 
-        list[pos]                  = (int)(addr);
-        list[pos+1]                = instruction;
+        list[pos]                      = (int)(addr);
+        list[pos+1]                    = instruction;
 
         // lower bound check
         //
-        if ((int)addr             == memtype[section].lower)
+        if ((int)addr                 == memtype[section].lower)
         {
-            min                    = pos;
+            min                        = pos;
         }
         else
         {
@@ -885,10 +885,23 @@ void error_handler()
             }
         }
 
-        y                          = 240;
-        for (index = min; index < max; index++)
+        y                              = 240;
+        for (index = 0; index < max; index++)
         {
-            if (list[(index*3)+1] == instruction)
+            ////////////////////////////////////////////////////////////////////////////
+            //
+            // Lower bound check for memory access
+            //
+            if (list[(index*3)+0]     <  memtype[section].lower)
+            {
+                continue;
+            }
+
+            ////////////////////////////////////////////////////////////////////////////
+            //
+            // 
+            //
+            if (list[(index*3)+1]     == instruction)
             {
                 set_multiply_color (color_red);
             }
@@ -897,20 +910,29 @@ void error_handler()
                 set_multiply_color (color_white);
             }
 
-            x                      = 49;           
+            x                          = 49;           
             print_at (49, y, "0x");
-            x                      = x    + 20;
+            x                          = x    + 20;
             itoa2 (list[(index*3)], data, 16);
             print_at (x, y, data);
-            x                      = x    + (strlen (data) * 10);
+            x                          = x    + (strlen (data) * 10);
             print_at (x, y, ":");
-            x                      = x    + 20;
+            x                          = x    + 20;
 
-            word                   = list[(index*3)+1];
-            value                  = list[(index*3)+2];
+            word                       = list[(index*3)+1];
+            value                      = list[(index*3)+2];
             decode_instruction (word, y, value);
         
-            y                      = y    + 20;
+            y                          = y    + 20;
+
+            ////////////////////////////////////////////////////////////////////////////
+            //
+            // Upper bound check for memory access
+            //
+            if (list[(index*3)+0]     == memtype[section].upper)
+            {
+                break;
+            }
         }
     }
 
