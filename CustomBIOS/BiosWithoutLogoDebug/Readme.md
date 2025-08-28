@@ -65,11 +65,10 @@ where the problem is taking place.
 
 ## To-Do / Limitations
 
-Bounds  checking  is  not  complete   in  the  current  version.  If  the
-prior  instructions fall  below the  current memory  region, or  the next
-instructions are beyond  it, no restriction is  currently performed (such
-scenarios would  likely cause  invalid output or  throw a  machine access
-error).
+Bounds checking  SHOULD be working,  especially for the lower  bounds, in
+the current  version. If  the prior instructions  fall below  the current
+memory region,  or the  next instructions  are beyond  it, it  should not
+attempt to go beyond the current Vircon32 memory "page".
 
 Port  name translations  are now  performed, however  the "Command"  port
 options are  not translated: you  will just get  the raw hex  value. This
