@@ -3,32 +3,34 @@
 #include "video.h"
 #include "time.h"
 #include "string.h"
+#include "misc.h"
 
 // include project libraries
 #include "ErrorInfo.h"
-
-// Simplify opcode display
-struct instruction_opcode
-{
-    int [7] name;
-};
 
 // ---------------------------------------------------------
 //     GENERAL DEFINITIONS
 // ---------------------------------------------------------
 
+// Simplify opcode display
+struct string_data
+{
+    int [40] name;
+    int      lower;
+    int      upper;
+};
 
 // BIOS-required regions; these
 // may safely be used by programs
-#define first_region_font      0
-#define region_white_pixel   256
+#define first_region_font         0
+#define region_white_pixel        256
 
 // other non-required regions, used
 // to draw the logo and error screens
-#define region_console       300
-#define region_cartridge     301
-#define region_down_arrow    302
-#define region_white_square  303
+#define region_console            300
+#define region_cartridge          301
+#define region_down_arrow         302
+#define region_white_square       303
 
 // colors for error screens
 #define error_colors_background   0xFF8D4130
@@ -36,18 +38,19 @@ struct instruction_opcode
 #define error_colors_description  color_white
 #define error_colors_values       0xFF8080FF
 
-
 // ---------------------------------------------------------
 //     SUPPORT FUNCTIONS
 // ---------------------------------------------------------
+
+// fixed itoa implementation (pending new DevTools release)
 void itoa2 (int value, int *result_text, int base)
 {
     int [16+1]  hex_values    = "0123456789ABCDEF";
     int [32+1]  rev_digits;
-    int  *next_digit          = rev_digits;
-    int   carry               = 0;
-    int   signval             = 0;
-    int   symbol              = 0;
+    int        *next_digit    = rev_digits;
+    int         carry         = 0;
+    int         signval       = 0;
+    int         symbol        = 0;
 
     if ((base                <  2) ||
         (base                >  16))
@@ -102,7 +105,7 @@ void itoa2 (int value, int *result_text, int base)
     *result_text              = 0;
 }
 
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 //
 // decode and display instruction and associated data at provided address
 //
@@ -114,16 +117,18 @@ void decode_instruction (int word, int y, int immediate_value)
     int      srcreg;
     int      addrmode;
     int      portnum;
+    int      size;
     int [11] data;
     int      x;
     int      flag;
-	int      needreg;
+    int      category;
+    int      attribute;
 
-    //////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // initialize our opcodes array with the available instructions
     //
-    instruction_opcode [64] opcodes =
+    string_data [64] opcodes    =
     {
         { "HLT"  }, { "WAIT"  }, { "JMP"   }, { "CALL" },
         { "RET"  }, { "JT"    }, { "JF"    }, { "IEQ"  },
@@ -143,27 +148,160 @@ void decode_instruction (int word, int y, int immediate_value)
         { "ACOS" }, { "ATAN2" }, { "LOG"   }, { "POW"  }
     };
 
-    /////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // initialize our port category arrays with the available port names
+    //
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // time port names
+    //
+    string_data [4] tim_ports   =
+    {
+        { "TIM_CurrentDate"          },
+        { "TIM_CurrentTime"          },
+        { "TIM_FrameCounter"         },
+        { "TIM_CycleCounter"         }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // RNG port names
+    //
+    string_data [1] rng_ports   =
+    {
+        { "RNG_CurrentValue"         }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // GPU port names
+    //
+    string_data [18] gpu_ports  =
+    {
+        { "GPU_Command"              },
+        { "GPU_RemainingPixels"      },
+        { "GPU_ClearColor"           },
+        { "GPU_MultiplyColor"        },
+        { "GPU_ActiveBlending"       },
+        { "GPU_SelectedTexture"      },
+        { "GPU_SelectedRegion"       },
+        { "GPU_DrawingPointX"        },
+        { "GPU_DrawingPointY"        },
+        { "GPU_DrawingScaleX"        },
+        { "GPU_DrawingScaleY"        },
+        { "GPU_DrawingAngle"         },
+        { "GPU_RegionMinX"           },
+        { "GPU_RegionMinY"           },
+        { "GPU_RegionMaxX"           },
+        { "GPU_RegionMaxY"           },
+        { "GPU_RegionHotspotX"       },
+        { "GPU_RegionHotspotY"       }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // SPU port names
+    //
+    string_data [14] spu_ports  =
+    {
+        { "SPU_Command"              },
+        { "SPU_GlobalVolume"         },
+        { "SPU_SelectedSound"        },
+        { "SPU_SelectedChannel"      },
+        { "SPU_SoundLength"          },
+        { "SPU_SoundPlayWithLoop"    },
+        { "SPU_SoundLoopStart"       },
+        { "SPU_SoundLoopEnd"         },
+        { "SPU_ChannelState"         },
+        { "SPU_ChannelAssignedSound" },
+        { "SPU_ChannelVolume"        },
+        { "SPU_ChannelSpeed"         },
+        { "SPU_ChannelLoopEnabled"   },
+        { "SPU_ChannelPosition"      }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // INP port names
+    //
+    string_data [13] inp_ports  =
+    {
+        { "INP_SelectedGamepad"      },
+        { "INP_GamepadConnected"     },
+        { "INP_GamepadLeft"          },
+        { "INP_GamepadRight"         },
+        { "INP_GamepadUp"            },
+        { "INP_GamepadDown"          },
+        { "INP_GamepadButtonStart"   },
+        { "INP_GamepadButtonA"       },
+        { "INP_GamepadButtonB"       },
+        { "INP_GamepadButtonX"       },
+        { "INP_GamepadButtonY"       },
+        { "INP_GamepadButtonL"       },
+        { "INP_GamepadButtonR"       }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // CAR port names
+    //
+    string_data [4] car_ports   =
+    {
+        { "CAR_Connected"            },
+        { "CAR_ProgramROMSize"       },
+        { "CAR_NumberOfTextures"     },
+        { "CAR_NumberOfSounds"       }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // MEM port names
+    //
+    string_data [1] mem_ports   =
+    {
+        { "MEM_Connected"            }
+    };
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    //
+    // connect all the categories together
+    //
+    size                        = sizeof (string_data *) * 7;
+    string_data **port          = (string_data **) malloc (size);
+    *(port+0)                   = tim_ports;
+    *(port+1)                   = rng_ports;
+    *(port+2)                   = gpu_ports;
+    *(port+3)                   = spu_ports;
+    *(port+4)                   = inp_ports;
+    *(port+5)                   = car_ports;
+    *(port+6)                   = mem_ports;
+
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // mask out and obtain individual instruction elements
     //
-    opcode    = (word & 0xFC000000) >> 26;
-    immflag   = (word & 0x02000000) >> 25;
-    dstreg    = (word & 0x01E00000) >> 21;
-    srcreg    = (word & 0x001E0000) >> 17;
-    addrmode  = (word & 0x0001C000) >> 14;
-    portnum   = (word & 0x00003FFF);
-	needreg   = 0;
+    opcode                      = (word    & 0xFC000000) >> 26;
+    immflag                     = (word    & 0x02000000) >> 25;
+    dstreg                      = (word    & 0x01E00000) >> 21;
+    srcreg                      = (word    & 0x001E0000) >> 17;
+    addrmode                    = (word    & 0x0001C000) >> 14;
+    portnum                     = (word    & 0x00003FFF);
 
-    /////////////////////////////////////////////////////////////////////////////
+    category                    = (portnum & 0x00000700) >> 8;
+    attribute                   = (portnum & 0x000000FF);
+
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // display the obtained instruction
     //
-    x         = 169;
+    x                           = 169;
     print_at (x, y, opcodes[opcode].name);
-    x         = x + ((strlen (opcodes[opcode].name)+1)*10);
+    x                           = x + ((strlen (opcodes[opcode].name)+1)*10);
 
-    /////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // special case processing:
     //   * zero parameter instructions (we're done)
@@ -203,187 +341,189 @@ void decode_instruction (int word, int y, int immediate_value)
         case 0x3B: // SIN
         case 0x3C: // ACOS
         case 0x3E: // LOG
-            if (immflag  == 1)
+            if (immflag        == 1)
             {
                 print_at (x, y, "0x");
-                x = x + 20;
+                x               = x + 20;
                 itoa2 (immediate_value, data, 16);
                 print_at (x, y, data);
             }
             else // register variant
             {
                 print_at (x, y, "R");
-                x = x + 10;
-                itoa2 (srcreg, data, 10);
+                x               = x + 10;
+                itoa2 (dstreg, data, 10); // dstreg is used by all, apparently
                 print_at (x, y, data);
             }
             return;
             break;
     };
 
-    //////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // ALL the first parameter processing for two parameter
     // instructions (with special cases for MOV and OUT)
     //
-    if (opcode           == 0x13) // MOV
+    if (opcode                 == 0x13) // MOV
     {
-        if (addrmode     >  4) // MOV addressing modes 5, 6, and 7 we dereference
+        if (addrmode           >  4) // MOV addressing modes 5, 6, 7 we dereference
         {
             print_at (x, y, "[");
-            x             = x + 10;
-			needreg       = 1;
+            x                   = x + 10;
         }
 
-        if ((addrmode    == 5) || (addrmode == 7))
+        if ((addrmode          == 5)  ||
+            (addrmode          == 7))
         {
-            if (addrmode == 7)
+            if (addrmode       == 7)
             {
                 print_at (x, y, "R");
-                x         = x + 10;
+                x               = x + 10;
                 itoa2 (srcreg, data, 10);
                 print_at (x, y, data);
-                x         = x + (strlen (data) * 10);
+                x               = x + (strlen (data) * 10);
                 print_at (x, y, "+");
-                x         = x + 10;
+                x               = x + 10;
             }
 
             // print out `immediate_value`
             print_at (x, y, "0x");
-            x             = x + 20;
+            x                   = x + 20;
             itoa2 (immediate_value, data, 16);
             print_at (x, y, data);
-            x             = x + (strlen (data) * 10);
+            x                   = x + (strlen (data) * 10);
         }
         else // otherwise, a register reference is made
         {
             print_at (x, y, "R");
-            x = x + 10;
+            x                   = x + 10;
             itoa2 (dstreg, data, 10);
             print_at (x, y, data);
-            x = x + 10;
-            if (dstreg > 9)
-                x = x + 10;
+            x                   = x + 10;
+            if (dstreg         >  9)
+                x               = x + 10;
         }
 
-        if (addrmode >  4)
+        if (addrmode           >  4)
         {
             print_at (x, y, "]");
-            x = x + 10;
+            x                   = x + 10;
         }
     }
-    else if (opcode == 0x18) // OUT: first parameter is always a port number
+    else if (opcode            == 0x18) // OUT: first parameter is always a port number
     {
-        print_at (x, y, "0x");
-        x = x + 20;
-        itoa2 (portnum, data, 16);
-        print_at (x, y, data);
-        x = x + (strlen (data) * 10);
+        print_at (x, y, (*(port+category)+attribute) -> name);
+        size                    = strlen ((*(port+category)+attribute) -> name) * 10;
+        x                       = x + size;
     }
     else // AVERAGE CASE: any other two parameter instruction; show dstreg
     {
         print_at (x, y, "R");
-        x = x + 10;
+        x                       = x + 10;
         itoa2 (dstreg, data, 10);
         print_at (x, y, data);
-        x = x + 10;
-        if (dstreg > 9)
-            x = x + 10;
+        x                       = x + 10;
+        if (dstreg             > 9)
+            x                   = x + 10;
     }
 
-    //////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // Display the parameter separating comma and space
     //
     print_at (x, y, ", ");
-    x = x + 20;
+    x                           = x + 20;
 
-    //////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // Two parameter, second parameter display. Special cases for LEA, OUT
     //
-    flag             = 0;
-    if (opcode      == 0x14) // LEA
+    flag                        = 0;
+    if (opcode                 == 0x14) // LEA
     {
         print_at (x, y, "[");
-        x = x + 10;
-        flag         = 1;
+        x                       = x + 10;
+        flag                    = 1;
 
-        if (immflag == 1)
+        if (immflag            == 1)
         {
             print_at (x, y, "R");
-            x = x + 10;
+            x                   = x + 10;
             itoa2 (srcreg, data, 10);
             print_at (x, y, data);
-            x = x + (strlen (data) * 10);
+            x                   = x + (strlen (data) * 10);
             print_at (x, y, "+");
-            x = x + 10;
+            x                   = x + 10;
         }
     }
-    else if (opcode      == 0x13) // MOV
+    else if (opcode            == 0x13) // MOV
     {
-        if ((addrmode    >= 2) && (addrmode <= 4))
+        if ((addrmode          >= 2)  &&
+            (addrmode          <= 4))
         {
             print_at (x, y, "[");
-            x             = x + 10;
-            flag          = 1;
+            x                   = x + 10;
+            flag                = 1;
 
-            if (addrmode == 4)
+            if (addrmode       == 4)
             {
                 print_at (x, y, "R");
-                x         = x + 10;
+                x               = x + 10;
                 itoa2 (srcreg, data, 10);
                 print_at (x, y, data);
-                x         = x + (strlen (data) * 10);
+                x               = x + (strlen (data) * 10);
                 print_at (x, y, "+");
-                x         = x + 10;
+                x               = x + 10;
             }
         }
+        else if (addrmode      >= 5)
+        {
+            flag                = 2;
+        }
     }
-    else if (opcode      == 0x18) // OUT special case (only if immflag is set)
+    else if (opcode            == 0x18) // OUT special case (only if immflag is set)
     {
-        if (immflag      == 1)
+        if (immflag            == 1)
         {
             print_at (x, y, "[");
-            x = x + 10;
-            flag          = 1;
+            x                   = x + 10;
+            flag                = 1;
         }
     }
 
-    //////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // AVERAGE CASE (not MOV)
     //
-    if ((immflag  == 1) && (needreg == 0)) // immediate value variant
+    if ((immflag               == 1) &&
+        (flag                  != 2))   // immediate value variant
     {
         print_at (x, y, "0x");
-        x = x + 20;
+        x                       = x + 20;
         itoa2 (immediate_value, data, 16);
         print_at (x, y, data);
-        x = x + (strlen (data) * 10);
+        x                       = x + (strlen (data) * 10);
     }
-    else if (opcode == 0x17) // IN special case (port number)
+    else if (opcode            == 0x17) // IN special case (port number)
     {
-        print_at (x, y, "0x");
-        x = x + 20;
-        itoa2 (portnum, data, 16);
-        print_at (x, y, data);
-        x = x + (strlen (data) * 10);
+        print_at (x, y, (*(port+category)+attribute) -> name);
+        size                    = strlen ((*(port+category)+attribute) -> name) * 10;
+        x                       = x + size;
     }
     else // register variant
     {
         print_at (x, y, "R");
-        x = x + 10;
+        x                       = x + 10;
         itoa2 (srcreg, data, 10);
         print_at (x, y, data);
-        x = x + (strlen (data) * 10);
+        x                       = x + (strlen (data) * 10);
     }
 
-    //////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // Wrapping up special case two parameter, second parameter edge cases
     //
-    if (flag == 1)
+    if (flag                   == 1)
     {
         print_at (x, y, "]");
     }
@@ -487,10 +627,10 @@ void error_handler()
 {
     // do not initialize these!
     // or else R0 will be overwritten
-    int      error_code;
-    int      instruction_pointer;
-    int      instruction;
-    int      immediate_value;
+    int       error_code;
+    int       instruction_pointer;
+    int       instruction;
+    int       immediate_value;
     
     // save registers to variables
     asm
@@ -502,36 +642,43 @@ void error_handler()
     }
     // we could also have done: `mov {addr}, R1` in the asm section
 
-    ////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////
     //
     // variables for instruction decoding
     //
-    int     *addr;
-    int [11] data;
-    int      immflag;
-    int [15] list;
-    int      word;
-    int      pos;
-    int      index;
-    int      value;
-    int      x;
-    int      y;
-    int      min;
-    int      max;
-    int      section;
+    int      *addr;
+    int [11]  data;
+    int       immflag;
+    int [15]  list;
+    int       word;
+    int       pos;
+    int       index;
+    int       value;
+    int       x;
+    int       y;
+    int       min;
+    int       max;
+    int       section;
     
-
-    //////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // initialize memory type array with their identified names    
     //
-    instruction_opcode [4] memtype =
+    string_data [4] memtype         =
     {
         { "[RAM] " }, { "[BIOS]" }, { "[CART]" }, { "[CARD]" }
     };
+    memtype[0].lower                = 0x00000000;
+    memtype[0].upper                = 0x003FFFFF;
+    memtype[1].lower                = 0x10000000;
+    memtype[1].upper                = 0x100FFFFF;
+    memtype[2].lower                = 0x20000000;
+    memtype[2].upper                = 0x27FFFFFF;
+    memtype[3].lower                = 0x30000000;
+    memtype[3].upper                = 0x30003FFF;
 
     // ensure everything gets drawn
-    end_frame();
+    end_frame ();
     
     // all possible error messages; do NOT store this as
     // global variables, since it may collide with globals
@@ -601,8 +748,8 @@ void error_handler()
     };
     
     // write the appropriate message for this error code
-    if ((error_code               >= 0) &&
-        (error_code               <  (int) error_unknown))
+    if ((error_code                   >= 0) &&
+        (error_code                   <  (int) error_unknown))
     {
         draw_message_screen (&error_messages[error_code]);
     }
@@ -611,15 +758,15 @@ void error_handler()
         draw_message_screen (&error_messages[error_unknown]);
     }
 
-    //////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
     //
     // Ascertain and display type of memory where error condition occurred
     //
-    section                        = (instruction_pointer & 0x30000000) >> 28;
+    section                            = (instruction_pointer & 0x30000000) >> 28;
     print_at (579, 0, memtype[section].name);
     
     // now print the related hex values
-    x                              = 49;
+    x                                  = 49;
     set_multiply_color (error_colors_values);
     print_hex_value (x, 160, "Instruction Pointer", instruction_pointer);
     print_hex_value (x, 180, "Instruction        ", instruction);
@@ -627,90 +774,134 @@ void error_handler()
 
     // do not do instruction dump for BIOS errors
     //
-    if (section                   != 1)
+    if (section                       != 1)
     {
-        addr                       = (int *)(instruction_pointer);
-        pos                        = 9;
-        while (pos                <  15)
+        // lookahead instruction logic
+        //
+        addr                           = (int *)(instruction_pointer);
+        pos                            = 9;
+        max                            = 5;
+        while (pos                    <  (max * 3))
         {
-            list[pos]              = (int)(addr); // addr of +N instruction
-            list[pos+1]            = *(addr);     // actual hex of +N instruction
-            immflag                = (*(addr) & 0x02000000) >> 25;
-            if (immflag           == 1)
+            list[pos]                  = (int)(addr); // addr of +N instruction
+            list[pos+1]                = *(addr);     // actual hex of +N instruction
+            immflag                    = (*(addr) & 0x02000000) >> 25;
+            if (immflag               == 1)
             {
-                addr               = addr + 1;
-                list[pos+2]        = *(addr);     // immediate value to +N instruction
+                addr                   = addr + 1;
+                list[pos+2]            = *(addr);     // immediate value to +N instruction
             }
             else
             {
-                list[pos+2]        = 0;
+                list[pos+2]            = 0;
             }
-            addr                   = addr + 1;
-            pos                    = pos  + 3;
+
+            // lookahead upper bound check
+            //
+            if ((int)addr             == memtype[section].upper)
+            {
+                max                    = (pos + 3) / 3;
+                break;
+            }
+
+            addr                       = addr + 1;
+            pos                        = pos  + 3;
         }
 
         // look back, get to instruction
-        pos                        = 6;
-        immflag                    = (instruction & 0x02000000) >> 25;
-        if (immflag               == 1)
+        pos                            = 6;
+        immflag                        = (instruction & 0x02000000) >> 25;
+
+        if (immflag                   == 1)
         {
-            addr                   = (int *)(instruction_pointer-2);
-            list[pos+2]            = *(addr+1);
+            addr                       = (int *)(instruction_pointer-2);
+            list[pos+2]                = *(addr+1);
         }
         else
         {
-            addr                   = (int *)(instruction_pointer-1);
-            list[pos+2]            = 0;
+            addr                       = (int *)(instruction_pointer-1);
+            list[pos+2]                = 0;
         }
 
-        list[pos]                  = (int)(addr);
-        list[pos+1]                = instruction;
+        list[pos]                      = (int)(addr);
+        list[pos+1]                    = instruction;
 
-        for (index = 3; index >= 0; index-=3)
+        // lower bound check
+        //
+        if ((int)addr                 == memtype[section].lower)
         {
-            addr                   = addr - 1;
-            immflag                = (*(addr) & 0x02000000) >> 25;
-            if (immflag           == 1) // definitely cannot be an instruction
+            min                        = pos;
+        }
+        else
+        {
+            min                        = 0;
+            for (index = 3; index >= min; index-=3)
             {
-                list[index+2]      = *(addr);     // immediate value
-                addr               = addr - 1;
-                list[index]        = (int)(addr); // addr of instruction
-                list[index+1]      = *(addr);     // actual hex of instruction
-            }
-            else // could be an instruction
-            {
-                addr               = addr - 1; // check the previous for immediate flag
-                immflag            = (*(addr) & 0x02000000) >> 25;
-                if (immflag       == 1)
+                addr                   = addr - 1;
+                immflag                = (*(addr) & 0x02000000) >> 25;
+                if (immflag           == 1) // definitely cannot be an instruction
                 {
-                    addr           = addr - 1; // if so, check the one before that
-                    immflag        = (*(addr) & 0x02000000) >> 25;
-                    if (immflag   == 1)
+                    list[index+2]      = *(addr);     // immediate value
+                    addr               = addr - 1;
+                    list[index]        = (int)(addr); // addr of instruction
+                    list[index+1]      = *(addr);     // actual hex of instruction
+                }
+                else // could be an instruction
+                {
+                    addr               = addr - 1; // check the previous for immediate flag
+                    immflag            = (*(addr) & 0x02000000) >> 25;
+                    if (immflag       == 1)
                     {
-                        addr       = addr + 2;
-                    }
+                        addr           = addr - 1; // if so, check the one before that
+                        immflag        = (*(addr) & 0x02000000) >> 25;
+                        if (immflag   == 1)
+                        {
+                            addr       = addr + 2;
+                        }
+                        else
+                        {
+                            addr       = addr + 1;
+                        }
+                        list[index]    = (int)(addr); // addr of instruction
+                        list[index+1]  = *(addr);     // actual hex of instruction
+                        list[index+2]  = *(addr+1);   // immediate value
+                    }        
                     else
                     {
-                        addr       = addr + 1;
+                        addr           = addr + 1;
+                        list[index]    = (int)(addr); // addr of instruction
+                        list[index+1]  = *(addr);     // actual hex of instruction
+                        list[index+2]  = 0;           // immediate value
                     }
-                    list[index]    = (int)(addr); // addr of instruction
-                    list[index+1]  = *(addr);     // actual hex of instruction
-                    list[index+2]  = *(addr+1);   // immediate value
-                }        
-                else
+                }
+
+                // lower bound check
+                //
+                if ((int)addr         == memtype[section].lower)
                 {
-                    addr           = addr + 1;
-                    list[index]    = (int)(addr); // addr of instruction
-                    list[index+1]  = *(addr);     // actual hex of instruction
-                    list[index+2]  = 0;           // immediate value
+                    min                = index;
+                    break;
                 }
             }
         }
 
-        y                          = 240;
-        for (index = 0; index < 5; index++)
+        y                              = 240;
+        for (index = 0; index < max; index++)
         {
-            if (list[(index*3)+1] == instruction)
+            ////////////////////////////////////////////////////////////////////////////
+            //
+            // Lower bound check for memory access
+            //
+            if (list[(index*3)+0]     <  memtype[section].lower)
+            {
+                continue;
+            }
+
+            ////////////////////////////////////////////////////////////////////////////
+            //
+            // 
+            //
+            if (list[(index*3)+1]     == instruction)
             {
                 set_multiply_color (color_red);
             }
@@ -719,20 +910,29 @@ void error_handler()
                 set_multiply_color (color_white);
             }
 
-            x                      = 49;           
+            x                          = 49;           
             print_at (49, y, "0x");
-            x                      = x    + 20;
+            x                          = x    + 20;
             itoa2 (list[(index*3)], data, 16);
             print_at (x, y, data);
-            x                      = x    + (strlen (data) * 10);
+            x                          = x    + (strlen (data) * 10);
             print_at (x, y, ":");
-            x                      = x    + 20;
+            x                          = x    + 20;
 
-            word                   = list[(index*3)+1];
-            value                  = list[(index*3)+2];
+            word                       = list[(index*3)+1];
+            value                      = list[(index*3)+2];
             decode_instruction (word, y, value);
         
-            y                      = y    + 20;
+            y                          = y    + 20;
+
+            ////////////////////////////////////////////////////////////////////////////
+            //
+            // Upper bound check for memory access
+            //
+            if (list[(index*3)+0]     == memtype[section].upper)
+            {
+                break;
+            }
         }
     }
 
