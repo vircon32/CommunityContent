@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <rom-definition version="1.0">
-    <rom type="cartridge" title="Worm" version="1.0" />
+    <rom type="cartridge" title="Worm" version="1.2" />
     <binary path="obj/Worm.vbin" />
     <textures>
-        <texture path="obj/TextureFont22x32.vtex" />        
+        <texture path="obj/TextureFont22x32.vtex" />
     </textures>
     <sounds>        
     </sounds>
