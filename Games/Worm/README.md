@@ -9,15 +9,22 @@ This is my [Vircon32 fantasy console](http://www.vircon32.com/) worm game, which
 |------------|-----------------------------------------------|
 | A          | Start GAME, Repeadetly tap to move Worm       |
 | LEFT/RIGHT | Select Game Mode on Titlescreen               |
-| L/B        | Select Seed, increases by 15 when hold        |
+| UP/DOWN    | Select Level on Titlescreen                   |
+| L/R        | Select Level, increases or decreases by 10    |
 | START      | Holding Start for half a second resets scores |
 
 ## Aim of the game
 Repeadetly Press / hold A button to move the worm around, dont hit obstacles and walls, try to gain highest score.
 
+## High Scores
+High Scores are only saved for levels 1 to 99 per game mode. If you select rnd2 levels, it will also select levels randomly higher than 99 but those all share a common highscore.
+If you want to compete with friends select a level manually to compare scores.
+
 ## Seed System
-The game has a seed system, you can choose a number between 0 and 9999 for the seed.
-Selecting seed 0 will produce random levels on ever (re)start, but selecting any higher number will make sure the level is the same for anyone playing on the same game mode and with the same seed
+The game has a seed system, you can choose a number between 1 and 99 for the seed.
+Selecting Rnd1 will select random levels between 1 and 99 on every (re)start, where highscore is saved for them.
+Rnd2 will also select random levels higher than 99 but it will use a common highscore for these levels. This is similar to how it was initially implemented in the previous Vircon32 version.
+It allows you to play random levels different from the fixed 99 ones.
 
 ## Game Modes
 There are 5 Game modes to play on, each with their own specifics
@@ -47,6 +54,22 @@ There are 5 Game modes to play on, each with their own specifics
 - Fixed space for the worm to move in
 - No obstacles
 - Constant slower speed
+
+## History
+
+### V1.1
+- Fixed 99 levels so people can play same levels
+- RND1 (random level between level 1 & 99)
+- RND2 (random level but higher than 99 also this is how version 1.0 worked)
+- Highscores for first 99 levels per game mode
+- global, shared highscore for levels > 99, this is how version 1.0 worked
+- Fixed tunnel gaps appearing, removed addition of tunnelspeed when creating new tunnelsections, all tunnel sections adhere to tunnelsectionwidth
+- UP/DOWN increases / Decreases level by 1
+- L/R increases / decreases level 10
+- Better collision checking, it now checks also on intersections instead of player being fully inside somewhere (like a wall, obstacle, or collectable)
+- Obstaclewidth increased from 8 to 10 to make sure we can't fly through it
+- Speed optimazations (not that they were required but it can help on lower specced devices not being able to run the vircon32 core full speed)
+- Renamed "Seed" to "Lvl" to make it more clear
 
 ## Credits
 The game was made possible after watching this youtube movie: [https://www.youtube.com/watch?v=W-3okcjOFnY](https://www.youtube.com/watch?v=W-3okcjOFnY)

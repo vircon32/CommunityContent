@@ -5,7 +5,7 @@
 #include "memcard.h"
 
 struct SaveData {
-	int[MaxGameModes] highScores;
+	int[MaxGameModes*maxSeed] highScores;
 };
 
 game_signature GameSignature;
