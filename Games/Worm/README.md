@@ -57,6 +57,10 @@ There are 5 Game modes to play on, each with their own specifics
 
 ## History
 
+### V1.2
+- Fixed writing out of tunnel array bounds during initialisation
+- Fixed writing out of playertrail array bounds during initialisation
+
 ### V1.1
 - Fixed 99 levels so people can play same levels
 - RND1 (random level between level 1 & 99)
@@ -65,9 +69,9 @@ There are 5 Game modes to play on, each with their own specifics
 - global, shared highscore for levels > 99, this is how version 1.0 worked
 - Fixed tunnel gaps appearing, removed addition of tunnelspeed when creating new tunnelsections, all tunnel sections adhere to tunnelsectionwidth
 - UP/DOWN increases / Decreases level by 1
-- L/R increases / decreases level 10
+- L/R increases / decreases level by 10
 - Better collision checking, it now checks also on intersections instead of player being fully inside somewhere (like a wall, obstacle, or collectable)
-- Obstaclewidth increased from 8 to 10 to make sure we can't fly through it
+- Obstaclewidth increased from 10 to 12 to make sure we can't fly through it
 - Speed optimazations (not that they were required but it can help on lower specced devices not being able to run the vircon32 core full speed)
 - Renamed "Seed" to "Lvl" to make it more clear
 

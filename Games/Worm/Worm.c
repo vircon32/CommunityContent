@@ -469,8 +469,11 @@ void startGame(int mode)
     //set some defaults in the arrays
     for(int i = 0; i < ScreenWidth + OffScreenTunnelSections; i++)
     {
-        playerTrail[i].x = 0;
-        playerTrail[i].y = 0;
+        if(i < ScreenWidth)
+        {
+            playerTrail[i].x = 0;
+            playerTrail[i].y = 0;
+        }
         tunnelParts[i*2].x = 0;
         tunnelParts[i*2+1].x = 0;
         tunnelParts[i*2].w = 0;
@@ -480,6 +483,7 @@ void startGame(int mode)
         tunnelParts[i*2].y = 0;
         tunnelParts[i*2+1].y = 0;
     }
+
     for(int i = 0 ; i < MaxObstacles; i++)
     {
         obstacles[i].x = ScreenWidth;
