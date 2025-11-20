@@ -37,6 +37,12 @@ After you solved a level one extra level will be unlocked. you always have to so
 | L | At the level Selector decrease selected level with 5, During game play select the previous music. |
 | R | At the level Selector increase selected level with 5, During game play select the next music. |
 
+## History
+V1.1:
+- Fix loading levels where player is on a spot for a box and the spot did not get loaded.
+
+V1.0:
+- Initial Release
 
 ## Credits
 Game is an adaptation from the gp2x version i (willems davy, aka joyrider3774) initially made many years ago

@@ -13,7 +13,7 @@ void Credits()
 	int[1000] Tekst;
 	if(InstalledLevelPacksCount > 0)
 	{
-		strcpy(Tekst,"Vircoban was created by\nWillems Davy - Willems Soft 2006-2024.\nHttps://joyrider3774.itch.io\n\nLevelpack ");
+		strcpy(Tekst,"Vircoban was created by\nWillems Davy - Willems Soft 2006-2025.\nHttps://joyrider3774.itch.io\n\nLevelpack ");
 		strcat(Tekst,LevelPackName);
 		strcat(Tekst," was created\nby ");
 		strcat(Tekst,LevelPackFile->author);

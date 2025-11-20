@@ -344,6 +344,7 @@ bool CLevelPackFile_parseText(CLevelPackFile *LevelPackFile, int* text, int maxW
 						levelPart->x = x;
 						levelPart->y = y;
 						levelPart->id = IDSpot;
+						levelMeta->parts++;
 
 						levelPart = &LevelPackFile->Levels[LevelPackFile->LevelCount][levelMeta->parts];
 						
