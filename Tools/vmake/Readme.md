@@ -4,7 +4,7 @@
 
 Vmake is a program designed to be simple, fast, and comprehensive; its primary purpose is to eliminate the need to create long scripts only to convert files and compile the game.
 
----
+
 
 ## Installation
 
