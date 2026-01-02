@@ -1,4 +1,4 @@
-#define ver "1.0 RC1"
+#define ver "1.1"
 
 #include <cctype>
 #include <cstdlib>
@@ -8,9 +8,7 @@
 #include <fstream>
 #include <filesystem>
 
-#include <chrono>
-#include <ctime>
-#include <iomanip>
+
 
 #include "os_dep.h"
 
@@ -18,7 +16,7 @@
 using namespace std;
 namespace fs = filesystem;
 
-bool verbose, create, test, help, version;
+bool verbose, create, test, help, version, silent, license, purge; // set up all arguments
 
 #include "func.h"
 
@@ -27,66 +25,51 @@ int main(int argc, char* argv[]) {
 
 	set_arguments(argc, argv);
 
-	//----------------------------------------------------------
-	// If there's no path argument, set current path to work on
-	//----------------------------------------------------------
+	// If there's no path argument, set current path to work
+	std::string path = "./";
+	//--------------------------------------
+	// Check if any argument is a directory
+	//--------------------------------------
 
-	std::string path = "./"; // default value is current directory
+	for(int i = 1; i < argc; i++){
+		std::string arg = argv[i];
+		if(arg.find('/') != std::string::npos || arg.find('\\') != std::string::npos) {
 
+			if(fs::exists(arg) || create) path = argv[i];
+			else{
+				cerr << "[E] Coudn't find directory " << argv[i] << endl;
+				return 1;
+			}
+
+		}
+	}
+
+
+	fs::path main_path(path);
+	fs::path build_path = main_path / "build";
 
 	if(help) cout << help_info;
 
 	else if(version) cout << ver << "\n";
 
+	else if(license) cout << license_info << "\n";
+
+	else if(purge) purge_build_files(main_path, build_path);
+
 	else if(create){
 
-		//--------------------------------------
-		// Check if any argument is a directory
-		//--------------------------------------
-
-		for(int i = 1; i < argc; i++){
-			std::string arg = argv[i];
-			if( arg.find('/') != std::string::npos || arg.find('\\') != std::string::npos ) {
-
-				path = argv[i];
-				cout << i << endl;
-
-			}
-		}
-
-		fs::path main_path(path);
-		fs::path build_path = main_path / "build";
-
 		create_project(main_path);
-		std::cout << "Working directory: " << path << std::endl;
+		if(!silent) std::cout << "Working directory: " << path << std::endl;
+
 
 	}else{
 
-		//--------------------------------------
-		// Check if any argument is a directory
-		//--------------------------------------
-
-		for(int i = 1; i < argc; i++){
-			std::string arg = argv[i];
-			if(arg.find('/') != std::string::npos || arg.find('\\') != std::string::npos) {
-
-				if(fs::exists(arg))path = argv[i];
-				else{
-						cout << "[E] Coudn't find directory " << argv[i] << endl;
-						return 1;
-				}
-
-			}
-		}
-		fs::path main_path(path);
-		fs::path build_path = main_path / "build";
-
-		std::cout << "Working directory: " << path << std::endl;
+		if(!silent) std::cout << "Working directory: " << path << std::endl;
 		string command;
 
 
 
-		cout << "\n\n--------------------------------------\n" << "  BEGIN FILE CONVERTION PROCESS" << "\n--------------------------------------\n";
+		if(!silent) cout << "\n\n--------------------------------------\n" << "  BEGIN FILE CONVERTION PROCESS" << "\n--------------------------------------\n";
 
 		for(const auto &entry : fs::recursive_directory_iterator(main_path, fs::directory_options::follow_directory_symlink)) {
 
@@ -103,10 +86,10 @@ int main(int argc, char* argv[]) {
 			if (fs::is_directory(entry) ) {
 
 				if(!fs::exists(build_path / relative)){
-					cout << "[+] " << relative << "\n";
+					if(!silent) clog << "[+] " << relative << "\n";
 
 					fs::create_directories(build_path / relative);
-					if(verbose) clog << "[P] made path: " + (build_path / relative).string() + "\n\n";
+					if(verbose && !silent) clog << "[P] made path: " + (build_path / relative).string() + "\n\n";
 				}
 
 
@@ -131,7 +114,7 @@ int main(int argc, char* argv[]) {
 					c = static_cast<char>(tolower(static_cast<unsigned char>(c)));		// removes case sensitivity
 				}
 
-				cout << "[-] size:" << (entry.file_size()/1024.0) << "KB > " << file.string() << ext << "\n";
+				if(!silent) clog << "[-] size:" << (entry.file_size()/1024.0) << "KB > " << file.string() << ext << "\n";
 
 
 
@@ -160,14 +143,14 @@ int main(int argc, char* argv[]) {
 						(build_path/relative).replace_extension(out_ext).string() + "'";
 
 						system(shell.c_str());
-						if(verbose) clog << "[C]" << shell << "\n\n";
+						if(verbose && !silent) clog << "[C]" << shell << "\n\n";
 
-					} else if(verbose) {
+					} else if(verbose && !silent) {
 						clog << "[W]    Source hasn't changed, skipping.\n\n";
 					}
 
 
-				 }else if(verbose) clog << "[W]    Unrecognized format, ignoring.\n\n";
+				 }else if(verbose && !silent) clog << "[W]    Unrecognized format, ignoring.\n\n";
 		}
 
 	}
@@ -177,7 +160,7 @@ int main(int argc, char* argv[]) {
 		// run requiered commands to finally create the final ROM
 		//--------------------------------------------------------
 
-		cout << "\n\n--------------------------------------\n" << "  BEGIN BUILDING PROCESS" << "\n--------------------------------------\n\n";
+		if(!silent) cout << "\n\n--------------------------------------\n" << "  BEGIN BUILDING PROCESS" << "\n--------------------------------------\n\n";
 
 		build_rom(main_path, build_path);
 
