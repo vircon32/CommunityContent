@@ -1,4 +1,4 @@
-#define ver "1.1"
+#define ver "1.2"
 
 #include <cctype>
 #include <cstdlib>
@@ -16,7 +16,7 @@
 using namespace std;
 namespace fs = filesystem;
 
-bool verbose, create, test, help, version, silent, license, purge; // set up all arguments
+bool verbose, create, test, help, version, silent, license, purge, bios; // set up all arguments
 
 #include "func.h"
 
@@ -67,7 +67,8 @@ int main(int argc, char* argv[]) {
 		if(!silent) std::cout << "Working directory: " << path << std::endl;
 		string command;
 
-
+		if( !fs::exists(build_path) ) fs::create_directories(build_path);
+		if( !fs::exists(build_path / "obj") ) fs::create_directories(build_path / "obj");
 
 		if(!silent) cout << "\n\n--------------------------------------\n" << "  BEGIN FILE CONVERTION PROCESS" << "\n--------------------------------------\n";
 
