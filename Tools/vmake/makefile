@@ -34,20 +34,15 @@ endif
 
 ARGS= -Wall --static -o $(OUT)
 
-.PHONY: make test test-t test-c test-h
+.PHONY: make test test-cb test-b clean
 
 make:
 	$(MKDIR) bin
 	$(GPP) main.cpp $(ARGS)
 
 test: make
-	$(OUT) -v ./example
+	$(OUT)
 
-test-t:make
-	$(OUT) -v ./example -t
 
-test-c:make
-	$(OUT) -v ./newgame -c
 
-test-h:make
-	$(OUT) -v -h
+
