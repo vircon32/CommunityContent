@@ -1,4 +1,4 @@
-#define ver "1.3"
+#define ver "1.4"
 
 #include <cctype>
 #include <cstdlib>
@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
 		string command;
 
 		if( !fs::exists(build_path) ) fs::create_directories(build_path);
-		if( !fs::exists(build_path / "obj") ) fs::create_directories(build_path / "obj");
+		if( !fs::exists(build_path) ) fs::create_directories(build_path);
 
 
 		if(fs::exists( (main_path / "romdef.xml" ))){	//only continues if romdef.xml exists.
@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 				if (fs::is_directory(entry) ) {
 
 					if(!fs::exists(build_path / relative)){
-						if(!silent) clog << "[+] " << relative << "\n";
+						if(!silent && verbose) clog << "[+] " << relative << "\n";
 
 						fs::create_directories(build_path / relative);
 						if(verbose && !silent) clog << "[P] made path: " + (build_path / relative).string() + "\n\n";
@@ -134,8 +134,6 @@ int main(int argc, char* argv[]) {
 						c = static_cast<char>(tolower(static_cast<unsigned char>(c)));		// removes case sensitivity
 					}
 
-					if(!silent) clog << "[-] size:" << (entry.file_size()/1024.0) << "KB > " << file.string() << ext << "\n";
-
 
 
 					if(ext==".png"){
@@ -158,21 +156,33 @@ int main(int argc, char* argv[]) {
 
 					if(!command.empty()){ output_file= (build_path/relative).replace_extension(out_ext);
 
-						if( are_sources_older(output_file, (main_path/relative)) ) {	// doesn't build assets that wasn't changed
+						if( are_sources_older(output_file, (main_path/relative)) ) {	// don't build assets that wasn't changed
 
-							string shell = command + " '" + simple_path + "' -o '" +
-							(build_path/relative).replace_extension(out_ext).string() + "'";
+							string shell = command + " \"" + simple_path + "\" -o \"" +
+							(build_path/relative).replace_extension(out_ext).string() + "\"";
 
 							system(shell.c_str());
+
+
+							if(!silent) clog << "[-] size:" << (entry.file_size()/1024.0) << "KB > " << file.string() << ext << " > " <<  file.replace_extension(out_ext).string() << "\n";
+
 							if(verbose && !silent) clog << "[C]" << shell << "\n\n";
 
 						} else if(verbose && !silent) {
+
 							clog << "[W]    Source hasn't changed, skipping.\n\n";
 						}
 
 
-					}else if(verbose && !silent) clog << "[W]    Unrecognized format, ignoring.\n\n";
-			}
+					}else if(verbose && !silent){
+
+						clog << "[-] size:" << (entry.file_size()/1024.0) << "KB > " << file.string() << ext << " > " <<  file.replace_extension(out_ext).string() << "\n";
+
+						clog << "[W]    Unrecognized format, ignoring.\n\n";
+
+					}
+
+				}
 
 		}
 

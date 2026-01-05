@@ -42,4 +42,4 @@ The VMake installation process is really simple; just copy the VMake executable 
 
 ---
 
-Created by @palta under the MIT License.
+Created by @Palta under the MIT License.

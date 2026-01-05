@@ -61,7 +61,7 @@ int build_rom(fs::path main_path, fs::path build_path){
 		if(system(
 			(string(command) + " "
 			+ (main_path / "main.c -o ").string().c_str() +
-			(build_path / "obj" / "main.asm").string().c_str()
+			(build_path / "main.asm").string().c_str()
 			).c_str() ) !=0 ){
 			cerr << "Exiting.\n";
 		return 1;
@@ -72,8 +72,8 @@ int build_rom(fs::path main_path, fs::path build_path){
 	command = assembler;
 	if(system(
 		(string(command) + " "
-		+ (assembly ? (main_path / "main.asm -o ") : (build_path / "obj" / "main.asm -o ")).string().c_str()
-		+ (build_path / "obj" / "main.vbin").string().c_str()
+		+ (assembly ? (main_path / "main.asm -o ") : (build_path / "main.asm -o ")).string().c_str()
+		+ (build_path / "main.vbin").string().c_str()
 		).c_str())!=0 ) {
 		cerr << "Exiting.\n";
 	return 1;
@@ -84,16 +84,16 @@ int build_rom(fs::path main_path, fs::path build_path){
 	if(system(
 		(string(command) + " "
 		+ (main_path / "romdef.xml -o ").string().c_str()
-		+ (main_path / "main.v32").string().c_str()
+		+ (build_path / "main.v32").string().c_str()
 		).c_str()
 	)!=0){
 		cerr << "Exiting.\n";
 		return 1;
 	}else{
-		if(!silent) clog << "[V] correctly assembled\n";
+		if(!silent) clog << "[V] correctly packed\n";
 		if(!silent) cout << "\n\n--------------------------------------\n" << "  ROM BUILT CORRECTLY!" << "\n--------------------------------------\n\n";
 
-		if(test && !bios) quick_test( (main_path / "main.v32").string().c_str() );
+		if(test && !bios) quick_test( (build_path / "main.v32").string().c_str() );
 		if(test &&  bios) cerr << "[W] Can't quick test bios files \ntest them as cartridges instead!\n";
 
 		}
@@ -110,7 +110,7 @@ void create_project(fs::path main_path){
 	if( !fs::exists(main_path) ) fs::create_directories(main_path);
 
 
-	if( !fs::exists(main_path / "build" / "obj") ) fs::create_directories(main_path / "build" / "obj");
+	if( !fs::exists(main_path / "build") ) fs::create_directories(main_path / "build");
 
 
 	if(!assembly){

@@ -124,7 +124,7 @@ string template_romdef_xml = R"(
 <rom-definition version="1.0">
 
 <rom type="cartridge" title="Game" version="1.0" />
-	<binary path= "./build/obj/main.vbin" />
+	<binary path= "./build/main.vbin" />
 
 
 	<textures>
@@ -148,7 +148,7 @@ string template_romdef_xml_b = R"(
 <rom-definition version="1.0">
 
 <rom type="bios" title="custom-bios" version="1.2" />
-	<binary path= "./build/obj/main.vbin" />
+	<binary path= "./build/main.vbin" />
 
 
 	<textures>
@@ -323,11 +323,6 @@ void error_handler() {
 #endif)";
 
 
-string template_biosutils_asm=R"(
 
-
-
-
-)";
 
 #endif
