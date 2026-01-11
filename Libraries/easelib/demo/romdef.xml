@@ -1,0 +1,24 @@
+
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<rom-definition version="1.0">
+
+<rom type="cartridge" title="easelib-demo" version="1.0" />
+	<binary path= "./build/main.vbin" />
+
+
+	<textures>
+
+		<texture path="build/texture.vtex"/>
+		<texture path="build/libs/ubuntu_30.vtex"/>
+		<texture path="build/libs/Retro_Gaming_11.vtex"/>
+
+		</textures>
+
+
+	<sounds>
+
+		<!--sound path="build/sound.vsnd"/-->
+
+	</sounds>
+
+</rom-definition>
