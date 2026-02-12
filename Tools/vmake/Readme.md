@@ -15,15 +15,19 @@ To build a project, vmake will make some assumptions about its folder structure 
 
 To make things easier at the beginning of a project, you can initially use the command 'vmake -c' in order to generate a template for the minimum required files (main.c and romdef.xml). You are then expected to fill romdef.xml with the information for all needed textures and sounds. After this vmake will automatically process them in addition to compiling the code.
 
+
 ## Installation
+
 
 ### 1. Download VMake
 
 You can find pre-built binaries of VMake for Windows and Linux in the `bin` folder.
 
+
 ### 2. Install Vircon32 DevTools
 
 If you already have them installed, skip this part.
+
 
 Windows:
 
@@ -32,6 +36,7 @@ Windows:
 3. Include the path in the environment variables.
 4. Reboot.
 
+
 Linux:
 
 1. Download the ![DevTools.](https://github.com/vircon32/ComputerSoftware/releases/tag/devtools-v25.10.29)
@@ -39,6 +44,7 @@ Linux:
 3. Install them using your package manager.
 
 It is also recommended to install the Vircon32 Emulator in order to use the quick test feature.
+
 
 ### 3. Install VMake
 

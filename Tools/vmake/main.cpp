@@ -1,4 +1,4 @@
-#define ver "1.4"
+#define ver "1.5"
 
 #include <cctype>
 #include <cstdlib>

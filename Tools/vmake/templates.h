@@ -23,7 +23,7 @@ string help_info = R"(
 )";
 
 string template_main_c = R"(
-// #include "video.h";
+// #include "video.h"
 // #include "audio.h"
 // #include "input.h"
 // #include "math.h"
@@ -44,7 +44,7 @@ void main(void){
 
 
 string template_main_c_b = R"(
-// #include "video.h";
+// #include "video.h"
 // #include "audio.h"
 // #include "input.h"
 // #include "math.h"

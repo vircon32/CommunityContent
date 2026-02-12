@@ -57,7 +57,12 @@ int build_rom(fs::path main_path, fs::path build_path){
 
 	//compiles if it's not an assembly only project
 	if (!assembly) {
-		command = compiler;
+
+		if(bios)	command = string(compiler) + " -b ";
+		else 		command = compiler;
+
+
+
 		if(system(
 			(string(command) + " "
 			+ (main_path / "main.c -o ").string().c_str() +
@@ -69,7 +74,9 @@ int build_rom(fs::path main_path, fs::path build_path){
 	}
 
 
-	command = assembler;
+
+	if(bios)	command = string(assembler) + " -b ";
+	else 		command = assembler;
 	if(system(
 		(string(command) + " "
 		+ (assembly ? (main_path / "main.asm -o ") : (build_path / "main.asm -o ")).string().c_str()
