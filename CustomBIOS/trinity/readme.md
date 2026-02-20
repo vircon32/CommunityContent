@@ -23,7 +23,7 @@ An alternative BIOS for Vircon 32, with rich animations and visual effects.
 <br/><br/>
 
 
-_I know Ease Studio is not perfect, if you find issues or have suggestions, contact me! I'll be in the [Vircon 32 Discord server.](https://discord.gg/eEf3UKbJ9p) and [Matrix](https://matrix.to/#/@paltam:matrix.org)_
+If you find issues or have suggestions, contact me! I'll be in the [Vircon 32 Discord server.](https://discord.gg/eEf3UKbJ9p) and [Matrix](https://matrix.to/#/@paltam:matrix.org)_
 
 ---
 

@@ -47,6 +47,8 @@ bool cartridge_connected(){
 void run_cartridge(){
 
 	asm{
+	"mov R0, 0x00000000"
+	"out GPU_Command, GPUCommand_ClearScreen"
 
 	"mov R0, 1"
 	"out GPU_DrawingScaleY, R0"
@@ -64,6 +66,7 @@ void run_cartridge(){
 	"out GPU_DrawingAngle, R0"
 
 	"out GPU_SelectedRegion, R0"
+	""
 	"jmp 0x20000000"
 
 	}

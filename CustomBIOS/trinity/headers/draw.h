@@ -66,7 +66,6 @@ void draw3d(int x, int y, int tall){
 
 void print_hex(int x, int y, int value){
 	// borrowed and adapted some parts from carra's original bios
-	// this one isn't part of the final header
 
 	int[ 17 ] hex_characters = "0123456789ABCDEF";
 	int[ 9 ] hex_string;
