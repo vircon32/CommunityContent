@@ -1,10 +1,11 @@
 ![](https://i.postimg.cc/6pbwtzH9/pgoodies.png)
----
 
 A collection of useful functions bundled into one single library.
-
----
+</br>
+ 
 # FUNCTIONS
+
+
 
 ## wrap
 ~~~
@@ -268,7 +269,7 @@ _number_in_radians*deg = number_in_degrees_
 ### rad
 precalculated degree to radian convertion.
 
-_number_in_degrees*deg = number_in_radians_ 
+_number_in_degrees*rad = number_in_radians_ 
 
     rad = 57.2957795130823208767982
 
@@ -284,7 +285,7 @@ precalculated **𝜏** constant.
 ### euler
 precalculated **e** constant.
 
-    rad = 57.2957795130823208767982
+    euler = 2.71828182845904523536029
 
 
 
