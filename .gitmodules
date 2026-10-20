@@ -1,3 +1,6 @@
 [submodule "Assets/emulationstation-themes"]
 	path = Assets/emulationstation-themes
 	url = https://github.com/Chandler-Kluser/vircon32-libretro-theme-resources.git
+[submodule "Games/OceanStorm"]
+	path = Games/OceanStorm
+	url = https://github.com/Jastro/OceanStorm
